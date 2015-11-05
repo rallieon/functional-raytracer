@@ -1,5 +1,9 @@
 ﻿module Types
 
+open FSharp.Data
+
+type SceneSpecification = JsonProvider<"./SceneExample.json">
+
 type Color(r: float, g: float, b:float) =
     member this.r = r
     member this.g = g
