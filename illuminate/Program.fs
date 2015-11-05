@@ -3,6 +3,7 @@
 open System
 open System.Drawing
 open System.Windows.Forms
+open Types
 open Core
 open Material
 open Color
@@ -37,7 +38,7 @@ do
     let color2 = Color(1.0,0.416,0.0)
     let lightColor = Color(0.5,0.5,0.5)
     let checkerFunc (p:Point3D) size =
-        let (x,y,z) = (p.X, p.Y, p.Z)
+        let (x,y,z) = (p.x, p.y, p.z)
         let jump x y z =
             let j = int((int(Math.Abs(float(x))/size) + int(Math.Abs(float(y))/size) + int(Math.Abs(float(z))/size)) % 2)
             match Math.Abs(j) with
@@ -82,8 +83,8 @@ do
 
     // set up the coordinate system
     let n = norm (scene.camera.position - scene.camera.lookAt)
-    let u = norm (Vector3D.CrossProduct(scene.camera.lookUp, n))
-    let v = norm (Vector3D.CrossProduct(n, u))
+    let u = norm (scene.camera.lookUp.CrossProduct(n))
+    let v = norm (n.CrossProduct(u))
     let vpc = scene.camera.position - n
 
     // render the scene
@@ -93,7 +94,7 @@ do
 
     let image = Array.Parallel.init width  (fun x ->
                 Array.init height (fun y -> 
-                    let rayPoint = vpc + float(x-width/2)*pw*u + float(y-height/2)*ph*v
+                    let rayPoint = vpc + u*float(x-width/2)*pw + v*float(y-height/2)*ph
                     let rayDir = norm (rayPoint - scene.camera.position)
                     let ray = { origin = scene.camera.position; direction = rayDir }
                     let color = castRay ray scene 0

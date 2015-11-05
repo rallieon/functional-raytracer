@@ -53,13 +53,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Color.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="Core.fs" />
-    <Compile Include="Material.fs" />
+    <Compile Include="Color.fs" />
+    <Compile Include="Ray.fs" />
     <Compile Include="Shape.fs" />
     <Compile Include="Light.fs" />
     <Compile Include="Camera.fs" />
-    <Compile Include="Ray.fs" />
+    <Compile Include="Material.fs" />
     <Compile Include="Scene.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />

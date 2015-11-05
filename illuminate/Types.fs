@@ -36,16 +36,15 @@ type Vector3D(x: float, y: float, z: float) =
         Vector3D (c.x+s, c.y+s, c.z+s)
     static member ( + ) (c1:Vector3D, c2:Vector3D) = // there must be a less ugly way to do this
         let (x,y,z) = (c1.x + c2.x, c1.y + c2.y, c1.z + c2.z)
-        let x = match c1.x+c2.x with
-                |_ when c1.x+c2.x > 1.0 -> 1.0
-                |_ -> c1.x+c2.x
-        let y = match c1.y+c2.y with
-                |_ when c1.y+c2.y > 1.0 -> 1.0
-                |_ -> c1.y+c2.y
-        let z = match c1.z+c2.z with
-                |_ when c1.z+c2.z > 1.0 -> 1.0
-                |_ -> c1.z+c2.z
         Vector3D (x,y,z)
+    static member ( - ) (c1:Vector3D, c2:Vector3D) = // there must be a less ugly way to do this
+        let (x,y,z) = (c1.x - c2.x, c1.y - c2.y, c1.z - c2.z)
+        Vector3D (x,y,z)
+    member this.DotProduct(c2: Vector3D) = 
+        this.x * c2.x + this.y * c2.y + this.z * c2.z
+    member this.CrossProduct(c2: Vector3D) = 
+        let (x,y,z) = (this.y*c2.z - this.z*c2.y, this.z*c2.x - this.x*c2.z, this.x*c2.y - this.y*c2.x)
+        Vector3D(x,y,z)
     static member Zero = Vector3D(0.0,0.0,0.0)
 
 type Point3D(x: float, y: float, z: float) = 
@@ -60,21 +59,17 @@ type Point3D(x: float, y: float, z: float) =
         Point3D (c.x/s, c.y/s, c.z/s)
     static member ( + ) (c:Point3D, s:float) =
         Point3D (c.x+s, c.y+s, c.z+s)
+    static member ( + ) (c:Point3D, s:Vector3D) =
+        Point3D (c.x+s.x, c.y+s.y, c.z+s.z)
     static member ( + ) (c1:Point3D, c2:Point3D) = // there must be a less ugly way to do this
         let (x,y,z) = (c1.x + c2.x, c1.y + c2.y, c1.z + c2.z)
-        let x = match c1.x+c2.x with
-                |_ when c1.x+c2.x > 1.0 -> 1.0
-                |_ -> c1.x+c2.x
-        let y = match c1.y+c2.y with
-                |_ when c1.y+c2.y > 1.0 -> 1.0
-                |_ -> c1.y+c2.y
-        let z = match c1.z+c2.z with
-                |_ when c1.z+c2.z > 1.0 -> 1.0
-                |_ -> c1.z+c2.z
         Point3D (x,y,z)
     static member ( - ) (c1:Point3D, c2:Point3D) = // there must be a less ugly way to do this
         let (x,y,z) = (c1.x - c2.x, c1.y - c2.y, c1.z - c2.z)
         Vector3D (x,y,z)
+    static member ( - ) (c1:Point3D, c2:Vector3D) = // there must be a less ugly way to do this
+        let (x,y,z) = (c1.x - c2.x, c1.y - c2.y, c1.z - c2.z)
+        Point3D (x,y,z)
     static member Zero = Point3D(0.0,0.0,0.0)
 
 type Time     = float
