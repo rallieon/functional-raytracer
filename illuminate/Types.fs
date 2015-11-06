@@ -2,8 +2,6 @@
 
 open FSharp.Data
 
-type SceneSpecification = JsonProvider<"./SceneExample.json">
-
 type Color(r: float, g: float, b:float) =
     member this.r = r
     member this.g = g
@@ -92,11 +90,11 @@ type Ray      = { origin:Point3D; direction:Vector3D }
 type Intersection = { normal:Normal; point:Point3D; ray:Ray; material:Material }
 
 type Shape =
-    | Sphere     of Center * Radius  * (Point3D -> Material)
-    | Plane      of Normal * Point3D * (Point3D -> Material)
-    | BoundPlane of Normal * Point3D * Point3D * (Point3D -> Material)
+    | Sphere     of Center * Radius  * Material
+    | Plane      of Normal * Point3D * Material
+    | BoundPlane of Normal * Point3D * Point3D * Material
 
-type Scene    = { camera:Camera; lighting:Lighting; shapes:list<Shape> }
+type Scene    = { camera:Camera; lighting:Lighting; shapes:list<Shape>; width: int; height: int }
 
 // Epsilon is used for comparing equality with floating point numbers to avoid rounding errors
 let Epsilon = 0.0001

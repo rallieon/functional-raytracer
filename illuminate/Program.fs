@@ -3,6 +3,9 @@
 open System
 open System.Drawing
 open System.Windows.Forms
+open System.IO
+open Newtonsoft.Json;
+open Newtonsoft.Json.FSharp;
 open Types
 open Core
 open Material
@@ -12,53 +15,25 @@ open Ray
 open Scene
 open Light
 open Camera
+open Newtonsoft.Json.Linq
 
 [<STAThread>]
 do
-    let sceneSpec = SceneSpecification.Parse("./SceneExample.json")
-
-    // Make ourselves a canvas
-    let width = sceneSpec.Width
-    let height = sceneSpec.Height
-
-    // Vertical and horizontal field of view
-    let hfov = System.Math.PI/3.2
-    let vfov = hfov * float(height)/float(width)
-
-    // Pixel width and height
-    let pw = 2.0 * System.Math.Tan(float(hfov/2.0))/float(width)
-    let ph = 2.0 * System.Math.Tan(float(vfov/2.0))/float(height)
-
+    let spec = File.ReadAllText("../../SceneExample.json")
+    let scene = JsonConvert.DeserializeObject<Scene>(spec)
     
-    ignore 0
-    // scene
-    (*let scene = { camera=camera; lighting=lighting; shapes = [sphere1;] }
-
-    // set up the coordinate system
-    let n = norm (scene.camera.position - scene.camera.lookAt)
-    let u = norm (scene.camera.lookUp.CrossProduct(n))
-    let v = norm (n.CrossProduct(u))
-    let vpc = scene.camera.position - n
+    let image = buildScene scene
 
     // Setting up the UI components
-    let mainForm = new Form(Width = width, Height = height, Text = "FRay")
+    let mainForm = new Form(Width = scene.width, Height = scene.height, Text = "FRay")
     let box = new PictureBox(BackColor = Color.White, Dock = DockStyle.Fill, SizeMode = PictureBoxSizeMode.CenterImage)
     mainForm.Controls.Add(box)
-    let bmp = new Bitmap(width,height)
+    let bmp = new Bitmap(scene.width,scene.height)
 
     // render the scene
     let stopwatch = new System.Diagnostics.Stopwatch()
-    Console.WriteLine("Building scene at resolution {0}*{1}...", width, height)
+    Console.WriteLine("Building scene at resolution {0}*{1}...", scene.width, scene.height)
     stopwatch.Start()
-
-    let image = Array.Parallel.init width  (fun x ->
-                Array.init height (fun y -> 
-                    let rayPoint = vpc + u*float(x-width/2)*pw + v*float(y-height/2)*ph
-                    let rayDir = norm (rayPoint - scene.camera.position)
-                    let ray = { origin = scene.camera.position; direction = rayDir }
-                    let color = castRay ray scene 0
-                    let (a,r,g,b) = argbFromColor(color)
-                    Color.FromArgb(a,r,g,b)))
 
     stopwatch.Stop()
     Console.WriteLine("Time to render scene: {0:####}.{1:##} sec", stopwatch.Elapsed.Seconds, stopwatch.Elapsed.Milliseconds)
@@ -77,4 +52,4 @@ do
 
     // send the bitmap to our window to display
     box.Image <- (bmp :> Image)
-    Application.Run(mainForm)*)
+    Application.Run(mainForm)

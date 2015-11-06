@@ -18,8 +18,8 @@ let rec intersectShape shape ray =
         else
             let normalAtTime t = norm (pointAtTime (ray, t) - center)
             let (t1,t2) = (-sv + sqrt(discr), -sv - sqrt(discr))
-            [ (t1, { normal = normalAtTime t1; point = pointAtTime (ray, t1); ray = ray; material = material (pointAtTime (ray, t1)) });
-              (t2, { normal = normalAtTime t2; point = pointAtTime (ray, t2); ray = ray; material = material (pointAtTime (ray, t2)) }) ]
+            [ (t1, { normal = normalAtTime t1; point = pointAtTime (ray, t1); ray = ray; material = material });
+              (t2, { normal = normalAtTime t2; point = pointAtTime (ray, t2); ray = ray; material = material }) ]
     
     | Plane  (normal, point,  material ) -> // intersect a plane
         let v = ray.direction
@@ -29,7 +29,7 @@ let rec intersectShape shape ray =
         else
             let t = (point - ray.origin).DotProduct(N) / vN
             let intPoint = pointAtTime (ray, t)
-            [ (t , { normal = normal; point = pointAtTime (ray, t); ray = ray; material = material intPoint } ) ]
+            [ (t , { normal = normal; point = pointAtTime (ray, t); ray = ray; material = material } ) ]
 
     | BoundPlane (normal, point0, point1, material) -> // intersect a bound plane
         let plane = Plane (normal, point0, material)

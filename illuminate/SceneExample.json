@@ -1,62 +1,69 @@
 ﻿{
   "width": 640,
   "height": 480,
-  "lights": [
-    {
-      "position": {
-        "x": 5.0,
-        "y": -2.0,
-        "z": 0.0
-      },
-      "color": {
-        "r": 0.5,
-        "g": 0.5,
-        "b": 0.5
-      }
-    }
-  ],
-
-  "objects": [
-    {
-      "type": "sphere",
-      "position": {
-        "x": 1.5,
-        "y": 0.2,
-        "z": 0.5
-      },
-      "radius": 0.5,
-      "material": {
-        "reflectivity": 0.2,
-        "diffuseColor": {
-          "r": 0.31,
-          "g": 0.43,
-          "b": 1.0
+  "lighting": {
+    "ambientLight": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "lights": [
+      {
+        "position": {
+          "x": 5,
+          "y": -2,
+          "z": 0
         },
-        "specularColor": {
-          "r": 1.0,
-          "g": 0.416,
-          "b": 0.0
-        },
-        "shininess": 500.0
+        "color": {
+          "r": 0.9,
+          "g": 0.9,
+          "b": 0.9
+        }
       }
+    ]
+  },
+  "shapes": [
+    {
+      "Case": "Sphere",
+      "Fields": [
+        {
+          "x": 0.1,
+          "y": 0.2,
+          "z": 0.3
+        },
+        0.7,
+        {
+          "reflectivity": 0.2,
+          "diffuseColor": {
+            "r": 0.31,
+            "g": 0.43,
+            "b": 1
+          },
+          "specularColor": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "shininess": 500
+        }
+      ]
     }
   ],
   "camera": {
-    "type": "regular",
     "position": {
-      "x": 1.0,
+      "x": 1,
       "y": -1.7,
-      "z": 5.0
+      "z": 5
     },
     "lookAt": {
-      "x": 0.0,
+      "x": 0,
       "y": 0.8,
-      "z": 0.0
+      "z": 0
     },
     "lookUp": {
-      "x": 0.0,
-      "y": 1.0,
-      "z": 0.0
+      "x": 0,
+      "y": 1,
+      "z": 0
     }
   }
 }
