@@ -7,5 +7,6 @@ A raytracer built using F#
 3. ~~Define JSON scene definition and implement type provider~~
 4. ~~Implement Scene Import~~
 5. Add Tests
-5. Build basic Cornell Box scene
-6. Add Area Light
+6. Build basic Cornell Box scene
+7. Get Materials right
+8. Add Area Light
