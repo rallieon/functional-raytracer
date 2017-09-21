@@ -1,4 +1,3 @@
-﻿module Illuminate
-
-open System
-let add x y = x + y
+﻿namespace Illuminate
+module Types = 
+    type T = {First:string; Last:string}
