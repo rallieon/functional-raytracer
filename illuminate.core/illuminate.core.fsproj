@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="Program.fs" />
     <Compile Include="Math.fs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="FsAlg" Version="0.5.13" />
+  </ItemGroup>
 </Project>
