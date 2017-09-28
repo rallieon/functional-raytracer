@@ -3,8 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program.fs" />
-    <Compile Include="Math.fs" />
+    <Compile Include="Types.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FsAlg" Version="0.5.13" />
