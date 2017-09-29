@@ -3,21 +3,29 @@
 open FsAlg.Generic
 
 module Types = 
-    (* Scene *)
-    type WorldCoordinate = WorldCoordinate of Vector<float> //single discriminated union for type safety https://fsharpforfunandprofit.com/posts/designing-with-types-single-case-dus/
-    type Direction = Direction of Vector<float>
+    (* Framework *)
+    type WorldCoordinate = {x: float; y: float; z: float}
+    type Direction =  {dirX: float; dirY: float; dirZ: float}
     type Camera = WorldCoordinate
-    type ViewPlane = { x: int; y:int }
-
-    (* Glue *)
+    type ViewPlane = { screenWidth: int; screenHeight: int }
     type Ray = {direction: Direction; origin: WorldCoordinate}
     type Color = { r: float; g: float; b: float }
+    type ScreenCoordinate = { x: int; y: int; }
+    type Pixel = { coordinate: ScreenCoordinate; color: Color }
 
     (* Shapes *)
-    type Sphere = {origin: WorldCoordinate; radius: float}
+    type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
+    type Plane = {origin: WorldCoordinate; width: float; length: float}
+    type Shape = 
+        | Sphere of Sphere
+        | Plane of Plane
 
     (* Lighting *)
     type PointLight = {origin: WorldCoordinate; luminosity: Color}
     type SpotLight = {origin: WorldCoordinate; luminosity: Color; direction: Direction}
-    type Light = PointLight | SpotLight
+    type Light = 
+        | PointLight of PointLight 
+        | SpotLight of SpotLight
 
+    (* Scene *)
+    type Scene = { shapes: Shape seq; lights: Light seq;}
