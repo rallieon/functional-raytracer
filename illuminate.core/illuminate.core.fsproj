@@ -5,6 +5,7 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Operators.fs" />
+    <Compile Include="Math.fs" />
     <Compile Include="RayCasting.fs" />
   </ItemGroup>
   <ItemGroup>

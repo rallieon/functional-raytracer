@@ -7,10 +7,10 @@ module Types =
     type WorldCoordinate = {x: float; y: float; z: float}
     type Direction =  {dirX: float; dirY: float; dirZ: float}
     type Camera = WorldCoordinate
-    type ViewPlane = { screenWidth: int; screenHeight: int }
+    type ViewPlane = { screenWidth: int; screenHeight: int ; fov: int}
     type Ray = {direction: Direction; origin: WorldCoordinate}
     type Color = { r: float; g: float; b: float }
-    type ScreenCoordinate = { x: int; y: int; }
+    type ScreenCoordinate = { i: int; j: int; }
     type Pixel = { coordinate: ScreenCoordinate; color: Color }
 
     (* Shapes *)
