@@ -1,9 +1,8 @@
 namespace Illuminate
-
-open FsAlg.Generic
 open Illuminate.Types
 open Illuminate.Operators
 open Illuminate.Math
+
 module Core = 
 
     let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane : WorldCoordinate = 
@@ -17,4 +16,4 @@ module Core =
         let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
         {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }
 
-    
+ 

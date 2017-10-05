@@ -1,7 +1,5 @@
 ﻿namespace Illuminate
 
-open FsAlg.Generic
-
 module Types = 
     (* Framework *)
     type WorldCoordinate = {x: float; y: float; z: float}

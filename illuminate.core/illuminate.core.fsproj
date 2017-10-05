@@ -8,7 +8,4 @@
     <Compile Include="Math.fs" />
     <Compile Include="RayCasting.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FsAlg" Version="0.5.13" />
-  </ItemGroup>
 </Project>
