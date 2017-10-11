@@ -8,7 +8,7 @@ let main argv =
     let timer = System.Diagnostics.Stopwatch()
     let width,height = (1024,768)
     let sphere = {origin = {x = -1.; y = 1.; z = -3.}; radius = 1.; color = {r = 0; g = 0; b = 255}}
-    let scene = {shapes = [Sphere sphere]; lights = []; worldWidth = 10; worldHeight = 10}
+    let scene = {shapes = [Sphere sphere]; lights = []; camera = {x = 0.; y = 0.; z = 1.}; worldWidth = 10; worldHeight = 10}
     let viewPlane = {screenHeight = height; screenWidth = width; fov=90} 
 
     printfn "Rendering..."
