@@ -14,14 +14,14 @@ module Core =
         ignore (image |> List.map(fun pixel -> (wr.Write("{0} {1} {2} ", pixel.color.r, pixel.color.g, pixel.color.b))))
         wr.Close()
 
-    let calculateScreenCoordinateFromIndex index width height = 
+    let calculateScreenCoordinateFromIndex index width = 
         {i = index / width; j = index % width}
 
-    let render viewPlane =
+    let render viewPlane (scene:Scene) =
         let pixels = 
             (List.init (viewPlane.screenHeight * viewPlane.screenWidth) 
-                (fun idx -> {coordinate = (calculateScreenCoordinateFromIndex idx 
-                viewPlane.screenWidth viewPlane.screenHeight); color = {r = 0; g = 0; b = 255}}))
+                (fun idx -> {coordinate = (calculateScreenCoordinateFromIndex idx viewPlane.screenWidth); 
+                    color = {r = 0; g = 0; b = 0}}))
                 :Image
         pixels
 
