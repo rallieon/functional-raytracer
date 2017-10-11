@@ -14,10 +14,12 @@ module Types =
 
     (* Shapes *)
     type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
-    type Plane = {origin: WorldCoordinate; width: float; length: float}
+    type Plane = {origin: WorldCoordinate; width: float; length: float; color: Color}
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane
+
+    type HitPoint = Shape * float
 
     (* Lighting *)
     type PointLight = {origin: WorldCoordinate; luminosity: Color}
@@ -27,4 +29,4 @@ module Types =
         | SpotLight of SpotLight
 
     (* Scene *)
-    type Scene = { shapes: Shape seq; lights: Light seq; worldWidth: int; worldHeight: int}
+    type Scene = { shapes: Shape list; lights: Light list; worldWidth: int; worldHeight: int}
