@@ -2,8 +2,28 @@ namespace Illuminate
 open Illuminate.Types
 open Illuminate.Operators
 open Illuminate.Math
+open System
 
 module Core = 
+
+    let createPPM (image:Image) width height = 
+        let wr = new System.IO.StreamWriter("test.ppm")
+        wr.WriteLine "P3"
+        wr.WriteLine("{0} {1}", width, height)  //use writeline instead of printf for performance
+        wr.WriteLine "255"
+        ignore (image |> List.map(fun pixel -> (wr.Write("{0} {1} {2} ", pixel.color.r, pixel.color.g, pixel.color.b))))
+        wr.Close()
+
+    let calculateScreenCoordinateFromIndex index width height = 
+        {i = index / width; j = index % width}
+
+    let render viewPlane =
+        let pixels = 
+            (List.init (viewPlane.screenHeight * viewPlane.screenWidth) 
+                (fun idx -> {coordinate = (calculateScreenCoordinateFromIndex idx 
+                viewPlane.screenWidth viewPlane.screenHeight); color = {r = 0; g = 0; b = 255}}))
+                :Image
+        pixels
 
     let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane : WorldCoordinate = 
         let scale = tan (deg2rad (viewPlane.fov .* 0.5))
