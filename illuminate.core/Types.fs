@@ -29,4 +29,4 @@ module Types =
         | SpotLight of SpotLight
 
     (* Scene *)
-    type Scene = { shapes: Shape list; lights: Light list; camera: Camera; worldWidth: int; worldHeight: int}
+    type Scene = { shapes: Shape list; lights: Light list; camera: Camera}

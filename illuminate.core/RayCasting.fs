@@ -15,13 +15,18 @@ module Core =
         wr.Close()
 
     let calculateScreenCoordinateFromIndex index width = 
-        {i = index / width; j = index % width}
+        {i = index % width; j = index / width}
 
     let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane : WorldCoordinate = 
-        let scale = tan (deg2rad (viewPlane.fov .* 0.5))
+        let scale = tan (System.Math.PI * 0.5 * float viewPlane.fov / 180.)
         let imageAspectRatio = viewPlane.screenWidth ./. viewPlane.screenHeight
-        let x = (2. * (screenCoordinate.i .+ 0.5) / (float viewPlane.screenWidth - 1.)) * imageAspectRatio * scale
-        let y = (1. - 2. * (screenCoordinate.j .+ 0.5) / float viewPlane.screenHeight) * scale
+        let invWidth = 1. / float viewPlane.screenWidth
+        let invHeight = 1. / float viewPlane.screenHeight
+
+        //float xx = (2 * ((x + 0.5) * invWidth) - 1) * scale * aspectratio; 
+        //float yy = (1 - 2 * ((y + 0.5) * invHeight)) * scale; 
+        let x = (2. * ((screenCoordinate.i .+ 0.5) * invWidth) - 1.) * imageAspectRatio * scale
+        let y = (1. - 2. * ((screenCoordinate.j .+ 0.5) * invHeight)) * scale
         {x = x; y = y; z = -1.}
 
     let normalizeWorld (worldCoordinate, pixel:ScreenCoordinate) = 
@@ -64,7 +69,7 @@ module Core =
         let t0 = tca - thc;
         let t1 = tca + thc;
 
-        //need to refactor
+        //need to refactor, see https://stackoverflow.com/questions/28720585/nested-if-statements-vs-pattern-matching-in-f
         match tca < 0. with
             | false -> 
                 match d2 > sphere.radius with
@@ -80,7 +85,7 @@ module Core =
                                         | flase ->
                                             match t0 >= 0. && t1 >= 0. with
                                                 | false -> None //should never get here
-                                                | true -> Some((Shape.Sphere sphere), if t1 < t0 then t0 else t1)
+                                                | true -> Some((Shape.Sphere sphere), if t1 < t0 then t1 else t0)
                         
                     | true -> None
             | true -> None
