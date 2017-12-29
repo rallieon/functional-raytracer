@@ -1,8 +1,6 @@
 namespace Illuminate
 open Illuminate.Types
 open Illuminate.Operators
-open Illuminate.Math
-open System
 
 module Core = 
 
@@ -82,7 +80,7 @@ module Core =
                                 | false -> 
                                     match t0 < 0. && t1 >=0. with
                                         | true -> Some((Shape.Sphere sphere), t1)
-                                        | flase ->
+                                        | false ->
                                             match t0 >= 0. && t1 >= 0. with
                                                 | false -> None //should never get here
                                                 | true -> Some((Shape.Sphere sphere), if t1 < t0 then t1 else t0)

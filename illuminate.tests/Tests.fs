@@ -1,5 +1,5 @@
 namespace Illuminate
-open System
+
 open Xunit
 open Illuminate.Math
 open Illuminate.Types
