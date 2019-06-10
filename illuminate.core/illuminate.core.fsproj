@@ -8,5 +8,6 @@
     <Compile Include="Operators.fs" />
     <Compile Include="Math.fs" />
     <Compile Include="RayCasting.fs" />
+    <Compile Include="Image.fs" />
   </ItemGroup>
 </Project>
