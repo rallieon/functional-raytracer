@@ -28,3 +28,27 @@ module CoordinateTests =
         let conversion = mapScreenCoordinateToWorldCoodinate (screenCoordinate, rasterPlane)
         Assert.Equal(0.00, conversion.x, 2)
         Assert.Equal(0.00, conversion.y, 2)
+    
+    [<Fact>]
+    let ``can calculate screen coordinate from index 0`` () =
+        let screenCoordinate = calculateScreenCoordinateFromIndex 0 640
+        Assert.Equal(0, screenCoordinate.i)
+        Assert.Equal(0, screenCoordinate.j)
+    
+    [<Fact>]
+    let ``can calculate screen coordinate from index lower than width`` () =
+        let screenCoordinate = calculateScreenCoordinateFromIndex 320 640
+        Assert.Equal(320, screenCoordinate.i)
+        Assert.Equal(0, screenCoordinate.j)
+    
+    [<Fact>]
+    let ``can calculate screen coordinate from index higher than width`` () =
+        let screenCoordinate = calculateScreenCoordinateFromIndex 750 640
+        Assert.Equal(110, screenCoordinate.i)
+        Assert.Equal(1, screenCoordinate.j)
+
+    (*
+let calculateScreenCoordinateFromIndex index width = 
+let normalizeWorld (worldCoordinate, pixel:ScreenCoordinate) = 
+let worldSubWorld point origin = 
+    *)
