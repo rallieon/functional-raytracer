@@ -1,18 +1,16 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open Illuminate.Types
+﻿open Illuminate.Types
 open Illuminate.Core
+open System.IO
+open FSharp.Json
+
 [<EntryPoint>]
 let main argv =
     let timer = System.Diagnostics.Stopwatch()
-    let width,height,fov = (640,480,90)
-    let sphere = {origin = {x = 0.; y = 0.; z = -20.}; radius = 4.; color = {r = 0; g = 0; b = 255}}
-    let scene = {shapes = [Sphere sphere]; lights = []; camera = {x = 0.; y = 0.; z = 0.}}
-    let viewPlane = {screenHeight = height; screenWidth = width; fov=fov} 
+    let scene = Json.deserialize<Scene>(File.ReadAllText("./scenes/test1.json"))
 
     printfn "Rendering..."
     timer.Start()
-    let t = render viewPlane scene
-    createPPM t width height
+    let t = render scene
+    createPPM t scene.width scene.height
     printfn "Elapsed Time: %i" timer.ElapsedMilliseconds
     0 // return an integer exit code

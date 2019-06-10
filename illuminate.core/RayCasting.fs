@@ -15,7 +15,7 @@ module Core =
     let calculateScreenCoordinateFromIndex index width = 
         {i = index % width; j = index / width}
 
-    let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane : WorldCoordinate = 
+    let mapScreenCoordinateToWorldCoodinate (screenCoordinate:ScreenCoordinate, viewPlane:ViewPlane) : WorldCoordinate = 
         let scale = tan (float viewPlane.fov * 0.5 * System.Math.PI / 180.)
         let imageAspectRatio = viewPlane.screenWidth ./. viewPlane.screenHeight
         let invWidth = 1. / float viewPlane.screenWidth
@@ -88,14 +88,14 @@ module Core =
 
         {coordinate = pixel; color = hitColor}
 
-    let render viewPlane (scene:Scene) =
+    let render scene =
         let initPixels = 
-            (List.init (viewPlane.screenHeight * viewPlane.screenWidth) 
-                (fun idx -> {coordinate = (calculateScreenCoordinateFromIndex idx viewPlane.screenWidth); color = {r = 0; g = 0; b = 0}})):Image
+            (List.init (scene.height * scene.width) 
+                (fun idx -> {coordinate = (calculateScreenCoordinateFromIndex idx scene.width); color = {r = 0; g = 0; b = 0}})):Image
                 
         let renderedPixels = 
             initPixels
-            |> List.mapi (fun idx pixel -> (mapScreenCoordinateToWorldCoodinate (calculateScreenCoordinateFromIndex idx viewPlane.screenWidth) viewPlane), pixel.coordinate)
+            |> List.mapi (fun idx pixel -> (mapScreenCoordinateToWorldCoodinate ((calculateScreenCoordinateFromIndex idx scene.width), {screenWidth = scene.width; screenHeight = scene.height; fov = scene.fov })), pixel.coordinate)
             |> List.map normalizeWorld
             |> List.map (fun result -> castRay result scene)
             :Image
