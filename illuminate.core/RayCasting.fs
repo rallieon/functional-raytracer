@@ -40,26 +40,6 @@ module Core =
         x * x2 + y * y2 + z * z2
 
     let intersectSphere (camera:Camera) (ray:Direction) (sphere:Sphere) = 
-        (*
-            // geometric solution
-         Vec3f L = center - orig; 
-         float tca = L.dotProduct(dir); 
-         if (tca < 0) return false; 
-         float d2 = L.dotProduct(L) - tca * tca; 
-         if (d2 > radius2) return false; 
-         float thc = sqrt(radius2 - d2); 
-         t0 = tca - thc; 
-         t1 = tca + thc; 
-
-         if (t0 > t1) std::swap(t0, t1); 
- 
-        if (t0 < 0) { 
-            t0 = t1; // if t0 is negative, let's use t1 instead 
-            if (t0 < 0) return false; // both t0 and t1 are negative 
-        } 
- 
-        t = t0; 
-        *)
         let l = worldSubWorld sphere.origin camera
         let tca = dotProduct l (ray.dirX, ray.dirY, ray.dirZ)
         let d2 = (dotProduct l l) - (tca * tca)
@@ -67,36 +47,15 @@ module Core =
         let t0 = tca - thc;
         let t1 = tca + thc;
 
-        (*
-let hasTookExams (prams: string) = 
-    match prams.Contains("FullTime"), coll.English, coll.Maths, coll.PE, coll.Biology with
-    | true, null, _, _, _ -> (false, "Value of English is null")
-    | true, _, null, _, _ -> (false, "Value of Maths is null")
-    | true, _, _, null, _ -> (false, "Value of PE is null")
-    | _,    _, _, _, null -> (false, "Value of Biology is null") 
-    | _                   -> (true, null)
-        *)
-        //need to refactor, see https://stackoverflow.com/questions/28720585/nested-if-statements-vs-pattern-matching-in-f
-        match tca < 0. with
-            | false -> 
-                match d2 > sphere.radius with
-                    | false -> 
-                        match t1 < 0. && t0 < 0. with
-                        | true -> None
-                        | false ->
-                            match t1 < 0. && t0 >=0. with
-                                | true -> Some((Shape.Sphere sphere), t0)
-                                | false -> 
-                                    match t0 < 0. && t1 >=0. with
-                                        | true -> Some((Shape.Sphere sphere), t1)
-                                        | false ->
-                                            match t0 >= 0. && t1 >= 0. with
-                                                | false -> None //should never get here
-                                                | true -> Some((Shape.Sphere sphere), if t1 < t0 then t1 else t0)
-                        
-                    | true -> None
-            | true -> None
-        
+        //TODO Comment
+        match tca < 0., d2 > sphere.radius, t1 < 0. && t0 < 0., t1 < 0. && t0 >= 0., t0 < 0. && t1 >=0., t0 >= 0. && t1 >= 0. with
+            | true, _, _, _, _, _ -> None
+            | false, true, _, _, _, _ -> None
+            | false, false, true, _, _, _ -> None
+            | false, false, false, true, _, _ -> Some((Shape.Sphere sphere), t0)
+            | false, false, false, false, true, _ -> Some((Shape.Sphere sphere), t1)
+            | false, false, false, false, false, true -> Some((Shape.Sphere sphere), if t1 < t0 then t1 else t0)
+            | false, false, false, false, false, false -> None
     
     let intersectPlane (camera:Camera) (ray:Direction) (plane:Plane) =
         Some((Shape.Plane plane), 0.)
