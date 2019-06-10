@@ -1,6 +1,7 @@
 namespace Illuminate
 open Illuminate.Types
 open Illuminate.Operators
+open Illuminate.Math
 
 module Core = 
 
@@ -26,15 +27,10 @@ module Core =
     let worldSubWorld point origin = 
         (point.x - origin.x, point.y - origin.y, point.z - origin.z)
 
-    let dotProduct vector vector2 = 
-        let x,y,z = vector
-        let x2, y2, z2 = vector2
-        x * x2 + y * y2 + z * z2
-
     let intersectSphere (camera:Camera) (ray:Direction) (sphere:Sphere) = 
         let l = worldSubWorld sphere.origin camera
-        let tca = dotProduct l (ray.dirX, ray.dirY, ray.dirZ)
-        let d2 = (dotProduct l l) - (tca * tca)
+        let tca = dotProduct (l, (ray.dirX, ray.dirY, ray.dirZ))
+        let d2 = (dotProduct (l, l)) - (tca * tca)
         let thc = sqrt (sphere.radius - d2)
         let t0 = tca - thc;
         let t1 = tca + thc;
