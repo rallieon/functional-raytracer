@@ -4,6 +4,7 @@ open Xunit
 open Illuminate.Math
 open Illuminate.Types
 open Illuminate.Core
+open Illuminate.Coordinate
 
 module Tests = 
 
