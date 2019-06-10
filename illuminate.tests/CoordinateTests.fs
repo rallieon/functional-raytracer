@@ -6,14 +6,7 @@ open Illuminate.Types
 open Illuminate.Core
 open Illuminate.Coordinate
 
-module Tests = 
-
-    [<Fact>]
-    let ``can convert degrees to radians`` () =
-        let angle = 20.
-        let convert = deg2rad angle
-        Assert.Equal(0.35, convert, 2)
-
+module CoordinateTests = 
     [<Fact>]
     let ``can convert top left edge screen coordinate to world coordinate`` () =
         let screenCoordinate = {i = 0; j = 0}
