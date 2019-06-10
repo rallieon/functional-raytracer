@@ -16,7 +16,7 @@ module Core =
         {i = index % width; j = index / width}
 
     let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane : WorldCoordinate = 
-        let scale = tan (System.Math.PI * 0.5 * float viewPlane.fov / 180.)
+        let scale = tan (float viewPlane.fov * 0.5 * System.Math.PI / 180.)
         let imageAspectRatio = viewPlane.screenWidth ./. viewPlane.screenHeight
         let invWidth = 1. / float viewPlane.screenWidth
         let invHeight = 1. / float viewPlane.screenHeight
@@ -67,6 +67,15 @@ module Core =
         let t0 = tca - thc;
         let t1 = tca + thc;
 
+        (*
+let hasTookExams (prams: string) = 
+    match prams.Contains("FullTime"), coll.English, coll.Maths, coll.PE, coll.Biology with
+    | true, null, _, _, _ -> (false, "Value of English is null")
+    | true, _, null, _, _ -> (false, "Value of Maths is null")
+    | true, _, _, null, _ -> (false, "Value of PE is null")
+    | _,    _, _, _, null -> (false, "Value of Biology is null") 
+    | _                   -> (true, null)
+        *)
         //need to refactor, see https://stackoverflow.com/questions/28720585/nested-if-statements-vs-pattern-matching-in-f
         match tca < 0. with
             | false -> 
