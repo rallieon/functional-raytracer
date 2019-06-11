@@ -2,6 +2,7 @@ namespace Illuminate
 open Illuminate.Types
 open Illuminate.Operators
 open Illuminate.Math
+open Illuminate.MathTypes
 
 module Coordinate = 
 
@@ -24,5 +25,5 @@ module Coordinate =
         let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
         {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }, pixel
     
-    let worldSubWorld point origin = 
+    let worldSubWorld point origin : Vector = 
         (point.x - origin.x, point.y - origin.y, point.z - origin.z)
