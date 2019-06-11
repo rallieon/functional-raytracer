@@ -1,5 +1,5 @@
 ﻿open Illuminate.Types
-open Illuminate.Core
+open Illuminate.Render
 open Illuminate.Image
 open System.IO
 open FSharp.Json

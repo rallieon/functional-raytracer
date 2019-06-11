@@ -9,7 +9,9 @@
     <Compile Include="Math.fs" />
     <Compile Include="Coordinate.fs" />
     <Compile Include="Intersection.fs" />
-    <Compile Include="RayCasting.fs" />
+    <Compile Include="Hit.fs" />
+    <Compile Include="Light.fs" />
+    <Compile Include="Render.fs" />
     <Compile Include="Image.fs" />
   </ItemGroup>
 </Project>
