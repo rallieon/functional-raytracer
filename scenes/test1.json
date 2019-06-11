@@ -17,7 +17,21 @@
             }
         }
     }],
-    "lights": [],
+    "lights": [{
+        "PointLight": {
+            "origin": {
+                "x": 8,
+                "y": 8,
+                "z": -10
+            },
+            "luminosity": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+            },
+            "intensity": 255
+        }
+    }],
     "camera": {
         "x": 0,
         "y": 0,

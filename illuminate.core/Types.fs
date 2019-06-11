@@ -7,7 +7,7 @@ module Types =
     type Camera = WorldCoordinate
     type ViewPlane = { screenWidth: int; screenHeight: int ; fov: int}
     type Ray = {direction: Direction; origin: WorldCoordinate}
-    type Color = { r: int; g: int; b: int }
+    type Color = { r: float; g: float; b: float }
     type ScreenCoordinate = { i: int; j: int; }
     type Pixel = { coordinate: ScreenCoordinate; color: Color }
     type Image = Pixel list
@@ -19,14 +19,15 @@ module Types =
         | Sphere of Sphere
         | Plane of Plane
 
-    type HitPoint = Shape * float
+    type HitPoint = Shape * float * WorldCoordinate
 
     (* Lighting *)
-    type PointLight = {origin: WorldCoordinate; luminosity: Color}
-    type SpotLight = {origin: WorldCoordinate; luminosity: Color; direction: Direction}
+    type PointLight = {origin: WorldCoordinate; luminosity: Color; intensity: float}
+    type SpotLight = {origin: WorldCoordinate; luminosity: Color; intensity: float; direction: Direction}
     type Light = 
         | PointLight of PointLight 
         | SpotLight of SpotLight
 
+    type LightHitPoint = {lightDistance: float; lightDirection: Direction; lightHit: HitPoint option; light: Light}
     (* Scene *)
     type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
