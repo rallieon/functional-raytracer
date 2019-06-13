@@ -12,7 +12,7 @@ module Material =
                 | Plane p -> p.color
 
         scene.lights
-            |> List.map (fun light -> hitLight(light, scene, hitObj))
+            |> List.map (fun light -> hitLight light scene hitObj)
             |> List.map (
                 fun lightHit -> 
                     match lightHit with

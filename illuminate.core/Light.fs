@@ -12,7 +12,7 @@ module Light =
             | PointLight l -> worldSubWorld l.origin hitObj.point
             | SpotLight l -> worldSubWorld l.origin hitObj.point
 
-    let hitLight (light:Light, scene:Scene, hitObj:HitPoint) : LightHitPoint option =
+    let hitLight light scene hitObj =
         let lightVector = getLightVector light hitObj
         let lightDirection = getDirectionFromVector lightVector
         let normalLightDir = normalizeDirection(lightDirection) |> convertNormalToDirection
