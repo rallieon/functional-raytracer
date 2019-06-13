@@ -15,7 +15,7 @@ module Ray =
             printf ""
         *)
         
-        let hit = getHitPoint ray scene
+        let hit = getHitPoint ray scene.camera scene
         let hitColor = 
             match hit with
                 | Some point -> getHitColor (point, scene)

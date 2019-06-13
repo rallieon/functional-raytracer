@@ -17,15 +17,15 @@ module Light =
         let lightDirection = getDirectionFromVector lightVector
         let normalLightDir = normalizeDirection(lightDirection) |> convertNormalToDirection
         let lightDistance = dotProduct (lightVector, lightVector)
-        let lightHit = getHitPoint lightDirection scene
+        let lightHit = getHitPoint lightDirection hitObj.point scene
         match lightHit with
             | Some hit -> Some {lightDirection = normalLightDir; lightDistance = lightDistance; lightHit = lightHit; light = light}
             | None -> None
 
-    let getLightIntensity lightHit scene =
+    let getLightIntensity lightHit scene hitObj =
         let lightDirectionVector = convertDirectionToVector lightHit.lightDirection
-        let LdotN = max 0. (dotProduct (lightDirectionVector, lightDirectionVector))
-        let inShadow = getHitPoint lightHit.lightDirection scene
+        let LdotN = max 0. (dotProduct (lightDirectionVector, hitObj.normal))
+        let inShadow = getHitPoint lightHit.lightDirection hitObj.point scene
 
         match inShadow with
             | Some shadowHit -> 0.   //it hit an object before it hit the light...need to fix bug here where what if the object is behind the light. check distance!

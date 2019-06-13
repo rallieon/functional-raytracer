@@ -16,7 +16,7 @@ module Material =
             |> List.map (
                 fun lightHit -> 
                     match lightHit with
-                        | Some hit -> getLightIntensity hit scene
+                        | Some hit -> getLightIntensity hit scene hitObj
                         | None -> 0.
                 )
             |> List.fold(fun color intensity -> 
