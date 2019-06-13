@@ -1,4 +1,5 @@
 ﻿namespace Illuminate
+open Illuminate.MathTypes
 
 module Types = 
     (* Framework *)
@@ -19,7 +20,7 @@ module Types =
         | Sphere of Sphere
         | Plane of Plane
 
-    type HitPoint = Shape * float * WorldCoordinate
+    type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal}
 
     (* Lighting *)
     type PointLight = {origin: WorldCoordinate; luminosity: Color; intensity: float}

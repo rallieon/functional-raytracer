@@ -22,13 +22,13 @@ module Intersection =
             | true, _, _, _, _, _ -> None
             | false, true, _, _, _, _ -> None
             | false, false, true, _, _, _ -> None
-            | false, false, false, true, _, _ -> Some((Shape.Sphere sphere), t0, calculateHitPoint(camera, ray, t0) )
-            | false, false, false, false, true, _ -> Some((Shape.Sphere sphere), t1, calculateHitPoint(camera, ray, t1))
-            | false, false, false, false, false, true -> Some((Shape.Sphere sphere), (if t1 < t0 then t1 else t0), calculateHitPoint(camera, ray, (if t1 < t0 then t1 else t0)))
+            | false, false, false, true, _, _ -> Some({shape = Sphere sphere; t = t0; point = calculateHitPoint(camera, ray, t0); normal = (0.,0.,0.)} )
+            | false, false, false, false, true, _ -> Some({shape = Sphere sphere; t = t1; point = calculateHitPoint(camera, ray, t1); normal = (0.,0.,0.)} )
+            | false, false, false, false, false, true -> Some({shape = Sphere sphere; t = (if t1 < t0 then t1 else t0); point = calculateHitPoint(camera, ray, (if t1 < t0 then t1 else t0)); normal = (0.,0.,0.)})
             | false, false, false, false, false, false -> None
     
     let intersectPlane (camera:Camera) (ray:Direction) (plane:Plane) =
-        Some((Shape.Plane plane), 0., calculateHitPoint(camera, ray, 0.))
+        Some({shape = Plane plane; t = 0.; point = calculateHitPoint(camera, ray, 0.); normal = (0.,0.,0.)})
 
     let intersect (camera:Camera) (ray:Direction) (shape:Shape) =
         match (shape) with

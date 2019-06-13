@@ -46,3 +46,10 @@ module Math =
     let getDirectionFromVector vector =
         let x,y,z = vector
         {dirX = x; dirY = y; dirZ = z}
+        
+    let normalizeWorld (worldCoordinate, pixel:ScreenCoordinate) = 
+        let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
+        {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }, pixel
+    
+    let worldSubWorld point origin : Vector = 
+        (point.x - origin.x, point.y - origin.y, point.z - origin.z)

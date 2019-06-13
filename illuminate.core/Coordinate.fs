@@ -20,10 +20,3 @@ module Coordinate =
         let x = (2. * ((screenCoordinate.i .+ 0.5) * invWidth) - 1.) * imageAspectRatio * scale
         let y = (1. - 2. * ((screenCoordinate.j .+ 0.5) * invHeight)) * scale
         {x = x; y = y; z = -1.}
-
-    let normalizeWorld (worldCoordinate, pixel:ScreenCoordinate) = 
-        let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
-        {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }, pixel
-    
-    let worldSubWorld point origin : Vector = 
-        (point.x - origin.x, point.y - origin.y, point.z - origin.z)

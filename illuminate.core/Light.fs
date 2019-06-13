@@ -8,25 +8,24 @@ open Illuminate.Hit
 
 module Light = 
     let getLightVector light hitObj = 
-        let _, _, hitCoordinate = hitObj
         match light with
-            | PointLight l -> worldSubWorld l.origin hitCoordinate
-            | SpotLight l -> worldSubWorld l.origin hitCoordinate
+            | PointLight l -> worldSubWorld l.origin hitObj.point
+            | SpotLight l -> worldSubWorld l.origin hitObj.point
 
     let hitLight (light:Light, scene:Scene, hitObj:HitPoint) : LightHitPoint option =
         let lightVector = getLightVector light hitObj
         let lightDirection = getDirectionFromVector lightVector
+        let normalLightDir = normalizeDirection(lightDirection) |> convertNormalToDirection
         let lightDistance = dotProduct (lightVector, lightVector)
         let lightHit = getHitPoint lightDirection scene
         match lightHit with
-            | Some hit -> Some {lightDirection = lightDirection; lightDistance = lightDistance; lightHit = lightHit; light = light}
+            | Some hit -> Some {lightDirection = normalLightDir; lightDistance = lightDistance; lightHit = lightHit; light = light}
             | None -> None
 
     let getLightIntensity lightHit scene =
-        let normalLightDirection = normalizeDirection(lightHit.lightDirection) |> convertNormalToDirection
         let lightDirectionVector = convertDirectionToVector lightHit.lightDirection
         let LdotN = max 0. (dotProduct (lightDirectionVector, lightDirectionVector))
-        let inShadow = getHitPoint normalLightDirection scene
+        let inShadow = getHitPoint lightHit.lightDirection scene
 
         match inShadow with
             | Some shadowHit -> 0.   //it hit an object before it hit the light...need to fix bug here where what if the object is behind the light. check distance!
