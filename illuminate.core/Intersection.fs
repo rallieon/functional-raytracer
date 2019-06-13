@@ -5,9 +5,16 @@ open Illuminate.Math
 open Illuminate.Coordinate
 
 module Intersection = 
-    let calculateHitPoint (camera:Camera, ray:Direction, tnear:float) =
+    let calculateHitPointSphere (camera:Camera, ray:Direction, tnear:float, sphere:Sphere) =
         let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}
-        {x = camera.x + evaluatedRay.x; y = camera.y + evaluatedRay.y; z = camera.z + evaluatedRay.z}
+        let point = {x = camera.x + evaluatedRay.x; y = camera.y + evaluatedRay.y; z = camera.z + evaluatedRay.z}
+        let normal = worldSubWorld point sphere.origin |> normalizeVector
+        {shape = Sphere sphere; t = tnear; point = point; normal = normal}
+    
+    let calculateHitPointPlane (camera:Camera, ray:Direction, tnear:float, plane:Plane) =
+        let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}
+        let point = {x = camera.x + evaluatedRay.x; y = camera.y + evaluatedRay.y; z = camera.z + evaluatedRay.z}
+        {shape = Plane plane; t = tnear; point = point; normal = (0.,0.,0.)}
 
     let intersectSphere (camera:Camera) (ray:Direction) (sphere:Sphere) = 
         let l = worldSubWorld sphere.origin camera
@@ -22,13 +29,13 @@ module Intersection =
             | true, _, _, _, _, _ -> None
             | false, true, _, _, _, _ -> None
             | false, false, true, _, _, _ -> None
-            | false, false, false, true, _, _ -> Some({shape = Sphere sphere; t = t0; point = calculateHitPoint(camera, ray, t0); normal = (0.,0.,0.)} )
-            | false, false, false, false, true, _ -> Some({shape = Sphere sphere; t = t1; point = calculateHitPoint(camera, ray, t1); normal = (0.,0.,0.)} )
-            | false, false, false, false, false, true -> Some({shape = Sphere sphere; t = (if t1 < t0 then t1 else t0); point = calculateHitPoint(camera, ray, (if t1 < t0 then t1 else t0)); normal = (0.,0.,0.)})
+            | false, false, false, true, _, _ -> Some(calculateHitPointSphere(camera, ray, t0, sphere))
+            | false, false, false, false, true, _ -> Some(calculateHitPointSphere(camera, ray, t1, sphere))
+            | false, false, false, false, false, true -> Some(calculateHitPointSphere(camera, ray, (if t1 < t0 then t1 else t0), sphere))
             | false, false, false, false, false, false -> None
     
     let intersectPlane (camera:Camera) (ray:Direction) (plane:Plane) =
-        Some({shape = Plane plane; t = 0.; point = calculateHitPoint(camera, ray, 0.); normal = (0.,0.,0.)})
+        Some(calculateHitPointPlane(camera, ray, 0., plane))
 
     let intersect (camera:Camera) (ray:Direction) (shape:Shape) =
         match (shape) with
