@@ -17,7 +17,7 @@ module Intersection =
         {shape = Plane plane; t = tnear; point = point; normal = (0.,0.,0.)}
 
     let intersectSphere (origin:WorldCoordinate) (ray:Direction) (sphere:Sphere) = 
-        let l = worldSubWorld sphere.origin origin
+        let l = worldSubWorld origin sphere.origin
         let rayAsVector = convertDirectionToVector ray
         let a = dotProduct (rayAsVector, rayAsVector)
         let b = 2. * dotProduct(rayAsVector, l)
@@ -26,9 +26,9 @@ module Intersection =
 
         match solQ, t0 < 0., t1 < 0. with
             | false, _, _ -> None
-            | true, true, _ -> Some(calculateHitPointSphere(origin, ray, t0, sphere))
-            | true, false, true -> Some(calculateHitPointSphere(origin, ray, t1, sphere))
-            | true, false, false -> None
+            | true, false, _ -> Some(calculateHitPointSphere(origin, ray, t0, sphere))
+            | true, true, false -> Some(calculateHitPointSphere(origin, ray, t1, sphere))
+            | true, true, true -> None
     
     let intersectPlane (origin:WorldCoordinate) (ray:Direction) (plane:Plane) =
         Some(calculateHitPointPlane(origin, ray, 0., plane))

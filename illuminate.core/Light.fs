@@ -24,14 +24,21 @@ module Light =
 
     let getLightIntensity lightHit scene hitObj =
         let lightDirectionVector = convertDirectionToVector lightHit.lightDirection
-        let LdotN = max 0. (dotProduct (lightDirectionVector, hitObj.normal))
+        let LdotN = (dotProduct (lightDirectionVector, hitObj.normal))
+        let normalIntensity = max 0. LdotN
         let inShadow = getHitPoint lightHit.lightDirection hitObj.point scene
 
-        match inShadow with
-            | Some shadowHit -> 0.   //it hit an object before it hit the light...need to fix bug here where what if the object is behind the light. check distance!
-            | None -> 
+        let tNearShadow = 
+            match inShadow with
+                | Some hit -> hit.t
+                | None -> 0.
+
+        //check if the ray hits an object AND make sure that object is between the light and the hitpoint
+        match inShadow, tNearShadow * tNearShadow < lightHit.lightDistance with
+            | Some shadowHit, true -> 0.
+            | _ ->
                 match lightHit.light with
-                | PointLight l -> l.intensity * LdotN
-                | SpotLight l -> l.intensity * LdotN
+                | PointLight l -> l.intensity * normalIntensity
+                | SpotLight l -> l.intensity * normalIntensity
 
  
