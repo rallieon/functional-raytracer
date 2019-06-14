@@ -14,5 +14,9 @@
     <Compile Include="Ray.fs" />
     <Compile Include="Render.fs" />
     <Compile Include="Image.fs" />
+    <Compile Include="SceneReader.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Json" Version="0.3.7" />
   </ItemGroup>
 </Project>

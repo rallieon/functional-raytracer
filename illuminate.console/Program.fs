@@ -1,13 +1,12 @@
 ﻿open Illuminate.Types
 open Illuminate.Render
 open Illuminate.Image
-open System.IO
-open FSharp.Json
+open Illuminate.SceneReader
 
 [<EntryPoint>]
 let main argv =
     let timer = System.Diagnostics.Stopwatch()
-    let scene = Json.deserialize<Scene>(File.ReadAllText("./scenes/test1.json"))
+    let scene = readScene "./scenes/test1.json"
 
     printfn "Rendering..."
     timer.Start()
