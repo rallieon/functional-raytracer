@@ -8,11 +8,11 @@ module Ray =
     let castRay (ray:Direction,pixel:ScreenCoordinate) (scene:Scene) =
         (*
             Stupid debugging needed
-        
-        if pixel.i = 320 && pixel.j = 322
+        *)
+        if pixel.i = 412 && pixel.j = 239
         then 
             printf ""
-        *)
+        
         
         let hit = getHitPoint ray scene.camera scene
         let hitColor = 

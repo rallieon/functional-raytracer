@@ -5,15 +5,29 @@
     "shapes": [{
         "Sphere": {
             "origin": {
-                "x": 0,
+                "x": 4,
                 "y": 0,
                 "z": -10
             },
-            "radius": 4,
+            "radius": 1,
             "color": {
                 "r": 0,
                 "g": 0,
                 "b": 255
+            }
+        }
+    }, {
+        "Sphere": {
+            "origin": {
+                "x": -4,
+                "y": 0,
+                "z": -10
+            },
+            "radius": 1,
+            "color": {
+                "r": 255,
+                "g": 0,
+                "b": 0
             }
         }
     }],
@@ -21,8 +35,8 @@
         "PointLight": {
             "origin": {
                 "x": 0,
-                "y": 0,
-                "z": -3
+                "y": 4,
+                "z": 0
             },
             "luminosity": {
                 "r": 255,

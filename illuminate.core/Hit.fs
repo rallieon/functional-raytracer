@@ -9,5 +9,5 @@ module Hit =
             |> List.map (fun shape -> (intersect origin ray shape))
             |> List.minBy (fun intersection -> 
                 match intersection with
-                    | Some result -> Some result.t
-                    | None -> None)
+                    | Some result -> result.t
+                    | None -> 100000000.)
