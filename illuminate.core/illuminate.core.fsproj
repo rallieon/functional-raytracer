@@ -5,7 +5,6 @@
   <ItemGroup>
     <Compile Include="MathTypes.fs" />
     <Compile Include="Types.fs" />
-    <Compile Include="Operators.fs" />
     <Compile Include="Math.fs" />
     <Compile Include="Coordinate.fs" />
     <Compile Include="Intersection.fs" />

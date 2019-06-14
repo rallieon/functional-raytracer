@@ -1,6 +1,5 @@
 namespace Illuminate
 open Illuminate.Types
-open Illuminate.Operators
 open Illuminate.Math
 open Illuminate.Material
 open Illuminate.Hit
