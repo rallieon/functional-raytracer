@@ -9,7 +9,7 @@
                 "y": 0,
                 "z": -10
             },
-            "radius": 1,
+            "radius": 4,
             "color": {
                 "r": 0,
                 "g": 0,
@@ -21,7 +21,7 @@
             "origin": {
                 "x": -4,
                 "y": 0,
-                "z": -10
+                "z": -5
             },
             "radius": 1,
             "color": {
@@ -34,9 +34,9 @@
     "lights": [{
         "PointLight": {
             "origin": {
-                "x": 0,
-                "y": 4,
-                "z": 0
+                "x": -8,
+                "y": 0,
+                "z": -2
             },
             "luminosity": {
                 "r": 255,
