@@ -19,7 +19,7 @@ or
 
 # todo
 
-1. Refactor lighting code
+1. ~~Refactor lighting code~~
 2. Add integration test scene and build some tests
 3. Implement ambient lighting
 4. Implement Plane rendering
