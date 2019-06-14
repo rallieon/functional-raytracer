@@ -1,4 +1,5 @@
 # illuminate
+
 A raytracer built using F#
 
 Building
@@ -6,9 +7,12 @@ Building
 `dotnet build`
 
 Testing
-`cd ./illuminate.tests`
 `dotnet test`
 
 Run
-`cd ./illuminate.core`
+`sh render.sh`
+
+or
+
+`cd illuminate.console`
 `dotnet run`

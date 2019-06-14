@@ -16,16 +16,25 @@ module Light =
         let lightDirection = getDirectionFromVector lightVector
         let normalLightDir = normalizeDirection(lightDirection) |> convertNormalToDirection
         let lightDistance = dotProduct (lightVector, lightVector)
-        let lightHit = getHitPoint lightDirection hitObj.point scene
-        match lightHit with
-            | Some hit -> Some {lightDirection = normalLightDir; lightDistance = lightDistance; lightHit = lightHit; light = light}
-            | None -> None
+
+        let inShadow = getHitPoint normalLightDir hitObj.shadowOrigin scene
+
+        let tNearShadow = 
+            match inShadow with
+                | Some hit -> hit.t
+                | None -> 0.
+        
+        match inShadow, tNearShadow * tNearShadow < lightDistance with
+            | Some shadowHit, true -> None
+            | _ ->
+                Some {lightDirection = normalLightDir; lightDistance = lightDistance; 
+                lightHit = inShadow; light = light}
 
     let getLightIntensity lightHit scene hitObj =
         let lightDirectionVector = convertDirectionToVector lightHit.lightDirection
         let LdotN = (dotProduct (lightDirectionVector, hitObj.normal))
         let normalIntensity = max 0. LdotN
-        let inShadow = getHitPoint lightHit.lightDirection hitObj.point scene
+        let inShadow = getHitPoint lightHit.lightDirection hitObj.shadowOrigin scene
 
         let tNearShadow = 
             match inShadow with

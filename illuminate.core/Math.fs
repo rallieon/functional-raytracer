@@ -60,6 +60,10 @@ module Math =
     let convertDirectionToVector (direction:Direction) : Vector =
         (direction.dirX, direction.dirY, direction.dirZ)
     
+    let convertNormalToVector (normal:Normal) : Vector =
+        let x,y,z = normal
+        (x,y,z)
+    
     let normalizeDirection (v:Direction) : Normal = 
         convertDirectionToVector(v) |> normalizeVector
     
@@ -73,3 +77,15 @@ module Math =
     
     let worldSubWorld point origin : Vector = 
         (point.x - origin.x, point.y - origin.y, point.z - origin.z)
+
+    let addVectorToPoint point vector = 
+        let x,y,z = vector
+        {x = point.x + x; y = point.y + y; z = point.z + z}
+    
+    let subVectorFromPoint point vector = 
+        let x,y,z = vector
+        {x = point.x - x; y = point.y + y; z = point.z + z}
+    
+    let multiplyVector (vector:Vector, scale:float) : Vector = 
+        let x,y,z = vector
+        (x * scale, y * scale, z * scale)

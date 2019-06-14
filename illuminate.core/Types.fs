@@ -19,7 +19,7 @@ module Types =
         | Sphere of Sphere
         | Plane of Plane
 
-    type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal}
+    type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 
     (* Lighting *)
     type PointLight = {origin: WorldCoordinate; luminosity: Color; intensity: float}
