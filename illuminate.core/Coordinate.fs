@@ -7,6 +7,9 @@ module Coordinate =
 
     let calculateScreenCoordinateFromIndex index width = 
         {i = index % width; j = index / width}
+    
+    let calculateIndexFromPixelCoordinate pixel scene = 
+        scene.width * pixel.coordinate.j + pixel.coordinate.i
 
     let mapScreenCoordinateToWorldCoodinate screenCoordinate viewPlane = 
         let imageAspectRatio = float viewPlane.width / float viewPlane.height
