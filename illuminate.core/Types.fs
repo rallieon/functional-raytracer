@@ -9,7 +9,7 @@ module Types =
     type Ray = {direction: Direction; origin: WorldCoordinate}
     type Color = { r: float; g: float; b: float }
     type ScreenCoordinate = { i: int; j: int; }
-    type Pixel = { coordinate: ScreenCoordinate; color: Color }
+    type Pixel = { coordinate: ScreenCoordinate; pixelColor: Color }
     type Image = Pixel list
 
     (* Shapes *)

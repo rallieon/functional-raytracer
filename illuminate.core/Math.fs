@@ -7,9 +7,9 @@ module Math =
     let deg2rad angle =
         System.Math.PI * angle / 180.0;
     
-    let dotProduct (vector:Vector, vector2:Vector) = 
-        let x,y,z = vector
-        let x2, y2, z2 = vector2
+    let dotProduct (multiplier :Vector, multiplicand:Vector) = 
+        let x,y,z = multiplier
+        let x2, y2, z2 = multiplicand
         x * x2 + y * y2 + z * z2
     
     let inverseMag (mag2:float, v:Vector) : Normal = 

@@ -13,7 +13,7 @@ module Render =
                 (fun idx -> 
                     {
                         coordinate = (calculateScreenCoordinateFromIndex idx scene.width); 
-                        color = {r = 0.; g = 0.; b = 0.}
+                        pixelColor = {r = 0.; g = 0.; b = 0.}
                     })):Image
                 
         let renderedPixels = 

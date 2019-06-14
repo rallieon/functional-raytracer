@@ -4,7 +4,7 @@ open Illuminate.Math
 open Illuminate.Light
 
 module Material = 
-    let getHitColor (hitObj:HitPoint, scene:Scene) =
+    let getHitColor hitObj scene =
         let shapeColor = 
             match hitObj.shape with
                 | Sphere s -> s.color
