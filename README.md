@@ -34,60 +34,63 @@ The command line will take two arguments. The first argument will define the pat
 
 The following is a sample scene file to be used as reference. Currently it is self explanatory, but will eventually need to expound upon this format.
 
-```
+```javascript
 {
-    "width": 640,
-    "height": 480,
-    "fov": 90,
-    "shapes": [{
-        "Sphere": {
-            "origin": {
-                "x": 4,
-                "y": 0,
-                "z": -10
-            },
-            "radius": 4,
-            "color": {
-                "r": 0,
-                "g": 0,
-                "b": 255
-            }
+  "width": 640,
+  "height": 480,
+  "fov": 90,
+  "shapes": [{
+      "Sphere": {
+        "origin": {
+          "x": 4,
+          "y": 0,
+          "z": -10
+        },
+        "radius": 4,
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 255
         }
-    }, {
-        "Sphere": {
-            "origin": {
-                "x": -4,
-                "y": 0,
-                "z": -5
-            },
-            "radius": 1,
-            "color": {
-                "r": 255,
-                "g": 0,
-                "b": 0
-            }
+      }
+    },
+    {
+      "Sphere": {
+        "origin": {
+          "x": -4,
+          "y": 0,
+          "z": -5
+        },
+        "radius": 1,
+        "color": {
+          "r": 255,
+          "g": 0,
+          "b": 0
         }
-    }],
-    "lights": [{
-        "PointLight": {
-            "origin": {
-                "x": -8,
-                "y": 0,
-                "z": -2
-            },
-            "luminosity": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-            },
-            "intensity": 1
-        }
-    }],
-    "camera": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+      }
     }
+  ],
+  "lights": [{
+      "PointLight": {
+        "origin": {
+          "x": -8,
+          "y": 0,
+          "z": -2
+        },
+        "luminosity": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "intensity": 1
+      }
+    }
+  ],
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  }
 }
 ```
 
