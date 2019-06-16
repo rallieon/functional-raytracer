@@ -13,9 +13,9 @@ module SceneWriter =
         bitmap.Pixels <- List.toArray skiaPixels
         let image = SKImage.FromBitmap bitmap
         let data = image.Encode(SKEncodedImageFormat.Jpeg, 100)
-        let timeNow = System.DateTime.Now.ToLongTimeString()
-        let fileName = "meta\\scenes\\" + timeNow + ".jpeg"
-        
+        let timeNow = System.DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")
+        let fileName = "meta\\images\\" + timeNow + ".jpeg"
+
         let stream = File.OpenWrite(fileName)
         data.SaveTo(stream)
         0
