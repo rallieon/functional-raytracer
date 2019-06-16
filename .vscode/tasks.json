@@ -11,7 +11,7 @@
             "isDefault": true
         },
         "presentation": {
-            "reveal": "silent"
+            "reveal": "always"
         },
         "problemMatcher": "$msCompile",
         "options": {
@@ -24,7 +24,7 @@
         }
     }, {
         "label": "run",
-        "command": "dotnet run --project illuminate.console -- main.json",
+        "command": "dotnet run --project illuminate.console -- ./meta/scenes/main.json",
         "type": "shell",
         "presentation": {
             "reveal": "always"
