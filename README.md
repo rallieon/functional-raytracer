@@ -1,6 +1,8 @@
-# illuminate
+# Illuminate
 
 A raytracer built using F#
+
+## Building & Running
 
 Building
 `dotnet restore`
@@ -12,12 +14,7 @@ Testing
 Run
 `sh render.sh`
 
-or
-
-`cd illuminate.console`
-`dotnet run`
-
-# todo
+## Action Items
 
 - ~~Refactor lighting code~~
 - ~~Add integration test scene and build some tests~~
