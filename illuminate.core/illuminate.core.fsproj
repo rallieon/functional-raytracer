@@ -13,7 +13,6 @@
     <Compile Include="Material.fs" />
     <Compile Include="Ray.fs" />
     <Compile Include="Render.fs" />
-    <Compile Include="Image.fs" />
     <Compile Include="SceneReader.fs" />
     <Compile Include="SceneWriter.fs" />
   </ItemGroup>

@@ -3,7 +3,6 @@ namespace Illuminate
 open Xunit
 open Illuminate.Types
 open Illuminate.Render
-open Illuminate.Image
 open Illuminate.SceneReader
 open Illuminate.Coordinate
 
