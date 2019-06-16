@@ -7,7 +7,7 @@ open Illuminate.SceneWriter
 [<EntryPoint>]
 let main argv =
     let timer = System.Diagnostics.Stopwatch()
-    let scene = readScene "./meta/scenes/test1.json"
+    let scene = readScene ("./meta/scenes/" + argv.[0])
 
     printfn "Rendering..."
     timer.Start()

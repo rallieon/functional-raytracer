@@ -22,5 +22,21 @@
                 ]
             }
         }
+    }, {
+        "label": "run",
+        "command": "dotnet run --project illuminate.console -- main.json",
+        "type": "shell",
+        "presentation": {
+            "reveal": "always"
+        },
+        "problemMatcher": "$msCompile",
+        "options": {
+            "shell": {
+                "executable": "cmd.exe",
+                "args": [
+                    "/d", "/c"
+                ]
+            }
+        }
     }]
 }
