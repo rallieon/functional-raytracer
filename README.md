@@ -19,8 +19,10 @@ or
 
 # todo
 
-1. ~~Refactor lighting code~~
-2. ~~Add integration test scene and build some tests~~
-3. Implement ambient lighting
-4. Implement Plane rendering
-5. Implement specular lighting
+- ~~Refactor lighting code~~
+- ~~Add integration test scene and build some tests~~
+- ~~Convert ppm to jpeg~~
+- Implement tooling around publishing and versioning
+- Implement ambient lighting
+- Implement Plane rendering
+- Implement specular lighting
