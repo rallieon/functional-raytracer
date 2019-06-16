@@ -4,5 +4,5 @@
 
 .vscode/
 
-*.ppm
+images/
 .DS_Store

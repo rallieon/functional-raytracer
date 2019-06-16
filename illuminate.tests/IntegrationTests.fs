@@ -9,7 +9,7 @@ open Illuminate.Coordinate
 
 module IntegrationTests = 
     let getScene =
-        readScene "../../../../scenes/integrationtest.json"
+        readScene "../../../../meta/scenes/integrationtest.json"
 
     let getIndex x y scene =
         calculateIndexFromPixelCoordinate {coordinate = {i = x; j = y}; pixelColor = {r = 0.; b = 0.; g = 0.;}} scene
