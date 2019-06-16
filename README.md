@@ -1,6 +1,6 @@
 # Illuminate
 
-A raytracer built using F#. The renderer will be based upon a variety of works, research papers, but primary references include:
+A raytracer built using F#. The renderer will be based upon a variety of works, research papers, and websites but primary references include:
 
 1. [PBRT](https://pbrt.org/)
 2. [Raytracing in One Weekend](https://github.com/petershirley/raytracinginoneweekend)
