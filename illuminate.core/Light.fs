@@ -57,8 +57,4 @@ module Light =
         //check if the ray hits an object AND make sure that object is between the light and the hitpoint
         match inShadow with
             | Some shadowHit -> {r = 0.; g = 0.; b = 0.}
-            | _ ->
-                match light with
-                | PointLight l -> l.luminosity
-                | SpotLight l -> l.luminosity
-                | DistantLight l -> l.luminosity
+            | _ -> lightHit.luminosity
