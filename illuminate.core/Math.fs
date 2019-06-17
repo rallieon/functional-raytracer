@@ -45,7 +45,7 @@ module Math =
 
     let normalizeVector (v:Vector) : Normal = 
         let x,y,z = v
-        let mag2 = x * x + y * y + z * z
+        let mag2 = dotProduct(v, v)
         match mag2 > 0. with
             | true -> inverseMag (mag2, v)
             | false -> (x, y, z)
@@ -89,3 +89,9 @@ module Math =
     let multiplyVector (vector:Vector, scale:float) : Vector = 
         let x,y,z = vector
         (x * scale, y * scale, z * scale)
+    
+    let calculateColorIntensity (color: Color, luminosity: float) = 
+        {r = color.r * luminosity; g = color.g * luminosity; b = color.b * luminosity}
+    
+    let negativeDirection dir =
+        {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }
