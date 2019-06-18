@@ -4,8 +4,11 @@ open SkiaSharp
 open System.IO
 
 module SceneWriter = 
+    let castByte (col:float) =
+        if col > 255. then 255uy else byte col
+
     let convertPixel pixel =
-        new SkiaSharp.SKColor( (byte pixel.pixelColor.r), (byte pixel.pixelColor.g), (byte pixel.pixelColor.b))
+        new SkiaSharp.SKColor( (pixel.pixelColor.r |> castByte), (pixel.pixelColor.g |> castByte), (pixel.pixelColor.b |> castByte))
 
     let writeScene (image:Image, scene:Scene, outputPath:string) =
         let bitmap = new SKBitmap(scene.width, scene.height)

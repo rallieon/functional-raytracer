@@ -1,54 +1,44 @@
 {
-    "width": 640,
-    "height": 480,
-    "fov": 90,
-    "shapes": [{
-        "Sphere": {
-            "origin": {
-                "x": 4,
-                "y": 0,
-                "z": -10
-            },
-            "radius": 4,
-            "color": {
-                "r": 0,
-                "g": 0,
-                "b": 255
-            }
+  "width": 640,
+  "height": 480,
+  "fov": 90,
+  "shapes": [
+    {
+      "Sphere": {
+        "origin": {
+          "x": 0,
+          "y": 0,
+          "z": -4
+        },
+        "radius": 1,
+        "color": {
+          "r": 255,
+          "g": 0,
+          "b": 0
         }
-    }, {
-        "Sphere": {
-            "origin": {
-                "x": -4,
-                "y": 0,
-                "z": -5
-            },
-            "radius": 1,
-            "color": {
-                "r": 255,
-                "g": 0,
-                "b": 0
-            }
-        }
-    }],
-    "lights": [{
-        "DistantLight": {
-            "direction": {
-                "dirX": 0,
-                "dirY": -1,
-                "dirZ": 0
-            },
-            "luminosity": {
-                "r": 1,
-                "g": 1,
-                "b": 1
-            },
-            "intensity": 0.5
-        }
-    }],
-    "camera": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+      }
     }
+  ],
+  "lights": [
+    {
+      "PointLight": {
+        "origin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "luminosity": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "intensity": 1
+      }
+    }
+  ],
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  }
 }
