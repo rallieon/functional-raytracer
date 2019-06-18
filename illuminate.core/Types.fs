@@ -22,9 +22,9 @@ module Types =
     type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 
     (* Lighting *)
-    type PointLight = {origin: WorldCoordinate; luminosity: Color; intensity: float}
-    type DistantLight = {direction: Direction; luminosity: Color; intensity: float}
-    type SpotLight = {origin: WorldCoordinate; luminosity: Color; intensity: float; direction: Direction}
+    type PointLight = {pointOrigin: WorldCoordinate; luminosity: Color; intensity: float}
+    type DistantLight = {distantLightDirection: Direction; luminosity: Color; intensity: float}
+    type SpotLight = {spotOrigin: WorldCoordinate; luminosity: Color; intensity: float; direction: Direction}
     type Light = 
         | PointLight of PointLight
         | DistantLight of DistantLight

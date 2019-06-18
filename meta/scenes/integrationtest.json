@@ -33,7 +33,7 @@
     }],
     "lights": [{
         "PointLight": {
-            "origin": {
+            "pointOrigin": {
                 "x": -8,
                 "y": 0,
                 "z": -2
@@ -47,7 +47,7 @@
         }
     }, {
         "DistantLight": {
-            "direction": {
+            "distantLightDirection": {
                 "dirX": 0,
                 "dirY": 0,
                 "dirZ": -1

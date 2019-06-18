@@ -6,59 +6,57 @@ open Illuminate.Intersection
 open Illuminate.Hit
 
 module Light = 
-    let calculateHDotL (lightDirection: Direction, hitObj:HitPoint) = 
+    let calculateHDotL lightDirection hitObj = 
         let hitVector = hitObj.normal |> convertNormalToVector
-        let inverseDirection = negativeDirection lightDirection |> convertDirectionToVector
+        let inverseDirection = lightDirection |> invertDirection |> convertDirectionToVector
         let value = dotProduct (hitVector, inverseDirection)
         max 0. value
 
-    let illuminateDistantLight (light:DistantLight, hitObj:HitPoint) = 
-        let HdotL = calculateHDotL(light.direction, hitObj)
-        let attunedLuminosity = calculateColorIntensity(light.luminosity, light.intensity)
-        let distanceAffectedLuminosity = {r = attunedLuminosity.r * HdotL; g = attunedLuminosity.g * HdotL; b = attunedLuminosity.b * HdotL}
-        {lightDistance = infinity; lightDirection = light.direction; luminosity = distanceAffectedLuminosity}
+    let illuminateDistantLight light hitObj = 
+        let HdotL = calculateHDotL light.distantLightDirection hitObj
+        let luminosity = calculateColorIntensity light.luminosity light.intensity
+
+        //calculate the light absorbed at the hit point luminosity
+        let hitPointLuminosity = {r = luminosity.r * HdotL; g = luminosity.g * HdotL; b = luminosity.b * HdotL}
+        {lightDistance = infinity; lightDirection = light.distantLightDirection; luminosity = hitPointLuminosity}
     
     let illuminateSpotLight (light:SpotLight, hitObj:HitPoint) = 
         //TODO implement actual spotlight code
-        let lightVector = (worldSubWorld hitObj.point light.origin)
-        let r2 = dotProduct (lightVector, lightVector)
-        let distance = sqrt r2
-        let x,y,z = lightVector
-        let normalLightDir = {dirX = x / distance; dirY = y / distance; dirZ = z /distance}
-        let luminosity = calculateColorIntensity(light.luminosity, light.intensity)
-        let attunedLuminosity = {r = luminosity.r / (4. * System.Math.PI * r2); g = luminosity.g / (4. * System.Math.PI * r2); b = luminosity.b / (4. * System.Math.PI * r2);}
-        let HdotL = calculateHDotL(normalLightDir, hitObj)
-
-        let distanceAffectedLuminosity = {r = attunedLuminosity.r * HdotL; g = attunedLuminosity.g * HdotL; b = attunedLuminosity.b * HdotL}
-
-        {lightDistance = distance; lightDirection = normalLightDir; luminosity = distanceAffectedLuminosity }
+        {lightDistance = 0.; lightDirection = {dirX = 0.; dirY = 0.; dirZ = 0.}; luminosity = {r = 0.; b = 0.; g = 0.} }
     
-    let illuminatePointLight (light:PointLight, hitObj:HitPoint) = 
-        let lightVector = (worldSubWorld hitObj.point light.origin)
+    let illuminatePointLight light hitObj = 
+        let lightVector = (worldSubWorld hitObj.point light.pointOrigin)
         let r2 = dotProduct (lightVector, lightVector)
         let distance = sqrt r2
         let x,y,z = lightVector
+
+        //normalize the ligth direction based on distance
         let normalLightDir = {dirX = x / distance; dirY = y / distance; dirZ = z /distance}
-        let luminosity = calculateColorIntensity(light.luminosity, light.intensity)
+
+        //get initial luminosity
+        let luminosity = calculateColorIntensity light.luminosity light.intensity
+
+        //calculate the distance attuned luminosity
         let attenuation = (4. * System.Math.PI * r2)
-        let attunedLuminosity = {r = luminosity.r / attenuation; g = luminosity.g / attenuation; b = luminosity.b / attenuation}
-        let HdotL = calculateHDotL(normalLightDir, hitObj)
+        let distanceAffectedLuminosity = {r = luminosity.r / attenuation; g = luminosity.g / attenuation; b = luminosity.b / attenuation}
 
-        let distanceAffectedLuminosity = {r = attunedLuminosity.r * HdotL; g = attunedLuminosity.g * HdotL; b = attunedLuminosity.b * HdotL}
+        //calculate the light absorbed at the hit point luminosity
+        let HdotL = calculateHDotL normalLightDir hitObj
+        let hitPointLuminosity = {r = distanceAffectedLuminosity.r * HdotL; g = distanceAffectedLuminosity.g * HdotL; b = distanceAffectedLuminosity.b * HdotL}
 
-        {lightDistance = distance; lightDirection = normalLightDir; luminosity = distanceAffectedLuminosity }
+        {lightDistance = distance; lightDirection = normalLightDir; luminosity = hitPointLuminosity }
 
     let getLightIntensity light scene hitObj =
         let lightHit = 
             match light with
-            | PointLight pl -> illuminatePointLight (pl, hitObj)
-            | DistantLight dl -> illuminateDistantLight (dl, hitObj)
+            | PointLight pl -> illuminatePointLight pl hitObj
+            | DistantLight dl -> illuminateDistantLight dl hitObj
             | SpotLight sl -> illuminateSpotLight (sl, hitObj)
 
-        let negativeDirection = negativeDirection lightHit.lightDirection
+        let invertedDirection = invertDirection lightHit.lightDirection
         
         //use the shadow origin to avoid shadow acne
-        let inShadow = getHitPoint negativeDirection hitObj.shadowOrigin scene
+        let inShadow = getHitPoint invertedDirection hitObj.shadowOrigin scene
 
         match inShadow with
             | Some shadowHit -> {r = 0.; g = 0.; b = 0.}

@@ -90,8 +90,8 @@ module Math =
         let x,y,z = vector
         (x * scale, y * scale, z * scale)
     
-    let calculateColorIntensity (color: Color, luminosity: float) = 
+    let calculateColorIntensity color luminosity = 
         {r = color.r * luminosity; g = color.g * luminosity; b = color.b * luminosity}
     
-    let negativeDirection dir =
+    let invertDirection dir =
         {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }
