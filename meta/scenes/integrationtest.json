@@ -43,7 +43,21 @@
                 "g": 1,
                 "b": 1
             },
-            "intensity": 1
+            "intensity": 250
+        }
+    }, {
+        "DistantLight": {
+            "direction": {
+                "dirX": 0,
+                "dirY": 0,
+                "dirZ": -1
+            },
+            "luminosity": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+            },
+            "intensity": 0.0015
         }
     }],
     "camera": {
