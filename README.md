@@ -102,7 +102,6 @@ Illuminate has a manual versioning increment policy, but the physical publishing
 
 ## Action Items
 
-- Ambient lighting
 - Plane rendering
 - Specular lighting
 - Triangle intersection

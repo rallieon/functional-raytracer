@@ -22,12 +22,17 @@ module Types =
     type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 
     (* Lighting *)
-    type PointLight = {origin: WorldCoordinate; luminosity: Color; intensity: float}
-    type SpotLight = {origin: WorldCoordinate; luminosity: Color; intensity: float; direction: Direction}
+    type PointLight = {pointOrigin: WorldCoordinate; luminosity: Color; intensity: float}
+    type DistantLight = {distantLightDirection: Direction; luminosity: Color; intensity: float}
+    type SpotLight = {spotOrigin: WorldCoordinate; luminosity: Color; intensity: float; direction: Direction}
     type Light = 
-        | PointLight of PointLight 
+        | PointLight of PointLight
+        | DistantLight of DistantLight
         | SpotLight of SpotLight
 
-    type LightHitPoint = {lightDistance: float; lightDirection: Direction; lightHit: HitPoint option; light: Light}
+    type LightHitPoint = {lightDistance: float; lightDirection: Direction; luminosity: Color}
     (* Scene *)
     type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
+
+    [<Literal>] 
+    let infinity = System.Double.MaxValue

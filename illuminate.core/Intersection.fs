@@ -7,12 +7,8 @@ module Intersection =
     let bias = 0.0001  //Todo, make an option?
 
     let calculateShadowPoint ray point normal = 
-        let shadowDot = dotProduct(ray |> convertDirectionToVector, normal |> convertNormalToVector)
         let biasNormal = multiplyVector (normal, bias)
-
-        match shadowDot < 0. with
-            | true -> addVectorToPoint point biasNormal
-            | false -> subVectorFromPoint point biasNormal
+        addVectorToPoint point biasNormal
 
     let calculateHitPointSphere (origin:WorldCoordinate, ray:Direction, tnear:float, sphere:Sphere) =
         let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}

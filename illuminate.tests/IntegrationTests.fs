@@ -35,7 +35,7 @@ module IntegrationTests =
         let index = getIndex 57 240 scene
         let pixel = t.[index]
 
-        Assert.Equal(235.09, pixel.pixelColor.r, 2)
+        Assert.Equal(363.41, pixel.pixelColor.r, 2)
         Assert.Equal(0., pixel.pixelColor.g)
         Assert.Equal(0., pixel.pixelColor.b)
     
@@ -48,7 +48,7 @@ module IntegrationTests =
 
         Assert.Equal(0., pixel.pixelColor.r)
         Assert.Equal(0., pixel.pixelColor.g)
-        Assert.Equal(205.87, pixel.pixelColor.b, 2)
+        Assert.Equal(118.64, pixel.pixelColor.b, 2)
     
     [<Fact>]
     let ``can render a ray hitting blue sphere in shadow`` () =
@@ -59,4 +59,4 @@ module IntegrationTests =
 
         Assert.Equal(0., pixel.pixelColor.r, 2)
         Assert.Equal(0., pixel.pixelColor.g)
-        Assert.Equal(0., pixel.pixelColor.b)
+        Assert.Equal(58.73, pixel.pixelColor.b, 2)

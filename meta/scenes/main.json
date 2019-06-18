@@ -33,17 +33,31 @@
     }],
     "lights": [{
         "PointLight": {
-            "origin": {
+            "pointOrigin": {
                 "x": -8,
                 "y": 0,
                 "z": -2
+            },
+            "luminosity": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            },
+            "intensity": 250
+        }
+    }, {
+        "DistantLight": {
+            "distantLightDirection": {
+                "dirX": 0,
+                "dirY": 0,
+                "dirZ": -1
             },
             "luminosity": {
                 "r": 255,
                 "g": 255,
                 "b": 255
             },
-            "intensity": 1
+            "intensity": 0.0015
         }
     }],
     "camera": {
