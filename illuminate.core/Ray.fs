@@ -9,7 +9,7 @@ module Ray =
         (*
             Stupid debugging needed
         *)
-        if pixel.i = 350 && pixel.j = 200
+        if pixel.i = 430 && pixel.j = 310
         then 
             printf ""
         
