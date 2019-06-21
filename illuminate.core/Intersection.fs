@@ -10,17 +10,20 @@ module Intersection =
         let biasNormal = multiplyVector (normal, bias)
         addVectorToPoint point biasNormal
 
-    let calculateHitPointSphere (origin:WorldCoordinate, ray:Direction, tnear:float, sphere:Sphere) =
+    let calcHitPoint origin ray tnear = 
         let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}
-        let point = {x = origin.x + evaluatedRay.x; y = origin.y + evaluatedRay.y; z = origin.z + evaluatedRay.z}
+        {x = origin.x + evaluatedRay.x; y = origin.y + evaluatedRay.y; z = origin.z + evaluatedRay.z}
+
+    let calculateHitPointSphere (origin:WorldCoordinate, ray:Direction, tnear:float, sphere:Sphere) =
+        let point = calcHitPoint origin ray tnear
         let normal = worldSubWorld point sphere.origin |> normalizeVector
         let shadowOrigin = calculateShadowPoint ray point normal
         {shape = Sphere sphere; t = tnear; point = point; normal = normal; shadowOrigin = shadowOrigin}
-    
+
     let calculateHitPointPlane (origin:WorldCoordinate, ray:Direction, tnear:float, plane:Plane) =
-        let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}
-        let point = {x = origin.x + evaluatedRay.x; y = origin.y + evaluatedRay.y; z = origin.z + evaluatedRay.z}
-        {shape = Plane plane; t = tnear; point = point; normal = (0.,0.,0.); shadowOrigin = {x = 0.; y = 0.; z = 0.}}
+        let point = calcHitPoint origin ray tnear
+        let shadowOrigin = calculateShadowPoint ray point plane.planeNormal
+        {shape = Plane plane; t = tnear; point = point; normal = plane.planeNormal; shadowOrigin = shadowOrigin}
 
     let intersectSphere (origin:WorldCoordinate) (ray:Direction) (sphere:Sphere) = 
         let l = worldSubWorld origin sphere.origin
@@ -35,9 +38,14 @@ module Intersection =
             | true, false, _ -> Some(calculateHitPointSphere(origin, ray, t0, sphere))
             | true, true, false -> Some(calculateHitPointSphere(origin, ray, t1, sphere))
             | true, true, true -> None
-    
+
     let intersectPlane (origin:WorldCoordinate) (ray:Direction) (plane:Plane) =
-        Some(calculateHitPointPlane(origin, ray, 0., plane))
+        let denom = dotProduct ((plane.planeNormal |> convertNormalToVector), (ray |> convertDirectionToVector))
+        let testRay = worldSubWorld plane.planePoint origin
+        let t = dotProduct(testRay, plane.planeNormal |> convertNormalToVector) / denom
+        match denom > epsilon, t >= 0. with 
+            | true, true -> Some(calculateHitPointPlane(origin, ray, t, plane))
+            | _ -> None
 
     let intersect (origin:WorldCoordinate) (ray:Direction) (shape:Shape) =
         match (shape) with

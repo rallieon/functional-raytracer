@@ -64,6 +64,9 @@ module Math =
         let x,y,z = normal
         (x,y,z)
     
+    let convertWorldCoordinateToVector (wc:WorldCoordinate) : Vector =
+        (wc.x, wc.y, wc.z)
+    
     let normalizeDirection (v:Direction) : Normal = 
         convertDirectionToVector(v) |> normalizeVector
     
