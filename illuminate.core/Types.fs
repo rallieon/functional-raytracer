@@ -14,7 +14,7 @@ module Types =
 
     (* Shapes *)
     type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
-    type Plane = {origin: WorldCoordinate; width: float; length: float; color: Color}
+    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane
@@ -36,3 +36,5 @@ module Types =
 
     [<Literal>] 
     let infinity = System.Double.MaxValue
+    [<Literal>] 
+    let epsilon = 0.000001

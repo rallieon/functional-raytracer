@@ -9,7 +9,7 @@
                 "y": -1,
                 "z": -4
             },
-            "planeNormal": [0, 1, 0],
+            "planeNormal": [0, -1, 0],
             "color": {
                 "r": 0,
                 "g": 0,
@@ -19,23 +19,9 @@
     }, {
         "Sphere": {
             "origin": {
-                "x": 4,
+                "x": 0,
                 "y": 0,
-                "z": -5
-            },
-            "radius": 1,
-            "color": {
-                "r": 0,
-                "g": 0,
-                "b": 255
-            }
-        }
-    }, {
-        "Sphere": {
-            "origin": {
-                "x": -4,
-                "y": 0,
-                "z": -5
+                "z": -7
             },
             "radius": 1,
             "color": {
@@ -46,20 +32,6 @@
         }
     }],
     "lights": [{
-        "PointLight": {
-            "pointOrigin": {
-                "x": -2,
-                "y": 6,
-                "z": -4
-            },
-            "luminosity": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-            },
-            "intensity": 1
-        }
-    }, {
         "DistantLight": {
             "distantLightDirection": {
                 "dirX": 0,
@@ -72,6 +44,20 @@
                 "b": 255
             },
             "intensity": 0.0015
+        }
+    }, {
+        "PointLight": {
+            "pointOrigin": {
+                "x": -2,
+                "y": -3,
+                "z": -4
+            },
+            "luminosity": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+            },
+            "intensity": 1
         }
     }],
     "camera": {
