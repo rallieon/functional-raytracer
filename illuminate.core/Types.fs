@@ -39,7 +39,11 @@ module Types =
     (* Scene *)
     type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
 
-    [<Literal>] 
+    [<Literal>]
     let infinity = System.Double.MaxValue
-    [<Literal>] 
+
+    [<Literal>]
     let epsilon = 0.000001
+
+    [<Literal>]
+    let bias = 0.0001
