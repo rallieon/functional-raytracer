@@ -35,7 +35,7 @@
         "DistantLight": {
             "distantLightDirection": {
                 "dirX": 0,
-                "dirY": 0,
+                "dirY": -0.5,
                 "dirZ": -1
             },
             "luminosity": {
@@ -49,7 +49,7 @@
         "PointLight": {
             "pointOrigin": {
                 "x": -2,
-                "y": 1,
+                "y": 6,
                 "z": -4
             },
             "luminosity": {
@@ -57,7 +57,7 @@
                 "g": 255,
                 "b": 255
             },
-            "intensity": 1
+            "intensity": 0.5
         }
     }],
     "camera": {

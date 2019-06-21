@@ -15,7 +15,7 @@ module SceneWriter =
         let skiaPixels = image |> List.map convertPixel
         bitmap.Pixels <- List.toArray skiaPixels
         let image = SKImage.FromBitmap bitmap
-        let data = image.Encode(SKEncodedImageFormat.Jpeg, 99)  //there is a bug in the jpeg encoder. do not make it 100 or you might run into unexplained encoding errors.
+        let data = image.Encode(SKEncodedImageFormat.Jpeg, 90)  //there is a bug in the jpeg encoder. do not make it 100 or you might run into unexplained encoding errors.
         let stream = File.OpenWrite(outputPath)
         data.SaveTo(stream)
         0
