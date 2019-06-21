@@ -25,7 +25,7 @@ module Light =
         {lightDistance = 0.; lightDirection = {dirX = 0.; dirY = 0.; dirZ = 0.}; luminosity = {r = 0.; b = 0.; g = 0.} }
     
     let illuminatePointLight light hitObj = 
-        let lightVector = (worldSubWorld light.pointOrigin hitObj.point)
+        let lightVector = (worldSubWorld hitObj.point light.pointOrigin)
         let r2 = dotProduct (lightVector, lightVector)
         let distance = sqrt r2
         let x,y,z = lightVector

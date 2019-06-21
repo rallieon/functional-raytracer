@@ -40,10 +40,11 @@ module Intersection =
             | true, true, true -> None
 
     let intersectPlane (origin:WorldCoordinate) (ray:Direction) (plane:Plane) =
-        let denom = dotProduct ((plane.planeNormal |> convertNormalToVector), (ray |> convertDirectionToVector))
+        let denom = dotProduct ((ray |> convertDirectionToVector), (plane.planeNormal |> convertNormalToVector))
         let testRay = worldSubWorld plane.planePoint origin
-        let t = dotProduct(testRay, plane.planeNormal |> convertNormalToVector) / denom
-        match denom > epsilon, t >= 0. with 
+        let temp = dotProduct(testRay, plane.planeNormal |> convertNormalToVector)
+        let t =  temp / denom
+        match abs denom > epsilon, t >= 0. with 
             | true, true -> Some(calculateHitPointPlane(origin, ray, t, plane))
             | _ -> None
 
