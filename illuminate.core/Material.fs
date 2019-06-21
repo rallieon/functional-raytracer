@@ -9,6 +9,7 @@ module Material =
             match hitObj.shape with
                 | Sphere s -> s.color
                 | Plane p -> p.color
+                | Triangle t -> t.color
 
         scene.lights
             |> List.map ( fun light -> getLightIntensity light scene hitObj )

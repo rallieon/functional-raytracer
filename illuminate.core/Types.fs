@@ -15,9 +15,11 @@ module Types =
     (* Shapes *)
     type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
     type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
+    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color}
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane
+        | Triangle of Triangle
 
     type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 
