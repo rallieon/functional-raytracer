@@ -46,8 +46,40 @@ module Intersection =
         match abs denom > epsilon, t >= 0. with 
             | true, true -> Some(calculateHitPointPlane(origin, ray, t, plane))
             | _ -> None
+    
+    let intersectTriangle (origin:WorldCoordinate) (ray:Direction) (t:Triangle) =
+        let A = worldSubWorld t.v1 t.v0
+        let B = worldSubWorld t.v2 t.v0
+        let N = cross A B
+        let dist = dotProduct(N, N)
+        let plane = {planePoint = t.v0; planeNormal = N |> convertVectorToNormal; color = t.color}
+
+        //check and see if it hits the plane of the triangle
+        let hitsPlane = intersectPlane origin ray plane
+        match hitsPlane with
+            | None -> None
+            | Some hit ->
+                //now that we have determined it hit the plane then check if the hitpoint is inside the triangle
+                let edge0 = worldSubWorld t.v1 t.v0
+                let pv0 = worldSubWorld hit.point t.v0
+                let edge0Check = dotProduct(N, (cross edge0 pv0))
+
+                let edge1 = worldSubWorld t.v2 t.v1
+                let pv1 = worldSubWorld hit.point t.v1
+                let edge1Check = dotProduct(N, (cross edge1 pv1))
+
+                let edge2 = worldSubWorld t.v0 t.v2
+                let pv2 = worldSubWorld hit.point t.v2
+                let edge2Check = dotProduct(N, (cross edge2 pv2))
+
+                match edge0Check < 0., edge1Check < 0., edge2Check < 0. with
+                    | true, _, _ -> None
+                    | false, true, _ -> None
+                    | false, false, true -> None
+                    | false, false, false -> Some({shape = Triangle t; t = hit.t; point = hit.point; normal = N; shadowOrigin = hit.shadowOrigin})
 
     let intersect (origin:WorldCoordinate) (ray:Direction) (shape:Shape) =
         match (shape) with
             | Sphere sphere -> intersectSphere origin ray sphere
             | Plane plane -> intersectPlane origin ray plane
+            | Triangle t -> intersectTriangle origin ray t

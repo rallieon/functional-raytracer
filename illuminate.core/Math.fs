@@ -12,6 +12,11 @@ module Math =
         let x2, y2, z2 = multiplicand
         x * x2 + y * y2 + z * z2
     
+    let cross multiplier multiplicand : Vector = 
+        let ax,ay,az = multiplier
+        let bx, by, bz = multiplicand
+        (ay*bz - az*by, az*bx - ax*bz, ax*by - ay*bx)
+    
     let inverseMag (mag2:float, v:Vector) : Normal = 
         let x,y,z = v
         let invMag = 1. / sqrt mag2
@@ -62,6 +67,10 @@ module Math =
     
     let convertNormalToVector (normal:Normal) : Vector =
         let x,y,z = normal
+        (x,y,z)
+    
+    let convertVectorToNormal (vector:Vector) : Normal =
+        let x,y,z = vector
         (x,y,z)
     
     let convertWorldCoordinateToVector (wc:WorldCoordinate) : Vector =

@@ -7,7 +7,7 @@ open Illuminate.Hit
 
 module Light = 
     let calculateHDotL lightDirection hitObj = 
-        let hitVector = hitObj.normal |> convertNormalToVector
+        let hitVector = hitObj.normal |> normalizeVector |> convertNormalToVector
         let inverseDirection = lightDirection |> invertDirection |> convertDirectionToVector
         let value = dotProduct (hitVector, inverseDirection)
         max 0. value
