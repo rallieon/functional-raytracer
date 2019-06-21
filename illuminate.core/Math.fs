@@ -1,6 +1,5 @@
 namespace Illuminate
 
-open Illuminate.MathTypes
 open Illuminate.Types
 
 module Math = 

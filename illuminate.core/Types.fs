@@ -1,7 +1,10 @@
 ﻿namespace Illuminate
-open Illuminate.MathTypes
 
 module Types = 
+    (* Math *)
+    type Vector = float * float * float
+    type Normal = float * float * float
+
     (* Framework *)
     type WorldCoordinate = {x: float; y: float; z: float}
     type Direction =  {dirX: float; dirY: float; dirZ: float}

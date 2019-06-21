@@ -1,7 +1,6 @@
 namespace Illuminate
 open Illuminate.Types
 open Illuminate.Math
-open Illuminate.MathTypes
 
 module Coordinate = 
 
