@@ -7,23 +7,24 @@ open Illuminate.Light
 open Illuminate.Ray
 
 module Render = 
+    let initPixels scene = 
+        (List.init (scene.height * scene.width) 
+            (fun idx -> 
+                {
+                    coordinate = (calculateScreenCoordinateFromIndex idx scene.width); 
+                    pixelColor = {r = 0.; g = 0.; b = 0.}
+                })):Image    
+
     let render scene =
-        let initPixels = 
-            (List.init (scene.height * scene.width) 
-                (fun idx -> 
-                    {
-                        coordinate = (calculateScreenCoordinateFromIndex idx scene.width); 
-                        pixelColor = {r = 0.; g = 0.; b = 0.}
-                    })):Image
-                
+        let coordinateBuilder = buildCoordinate scene
+        let initPixels = initPixels scene
+        let renderRay = castRay scene
+
         let renderedPixels = 
             initPixels
-            |> List.mapi (fun idx pixel ->
-                let screenCoord = calculateScreenCoordinateFromIndex idx scene.width
-                (mapScreenCoordinateToWorldCoodinate screenCoord scene), pixel.coordinate
-            )
+            |> List.mapi coordinateBuilder
             |> List.map normalizeWorld
-            |> List.map (fun result -> castRay result scene)
+            |> List.map renderRay
             :Image
 
         renderedPixels

@@ -18,3 +18,7 @@ module Coordinate =
         let x = (2. * ((float screenCoordinate.i + 0.5) * invWidth) - 1.) * imageAspectRatio * scale
         let y = (1. - 2. * ((float screenCoordinate.j + 0.5) * invHeight)) * scale
         {x = x; y = y; z = -1.}
+    
+    let buildCoordinate scene idx pixel =
+        let screenCoord = calculateScreenCoordinateFromIndex idx scene.width
+        (mapScreenCoordinateToWorldCoodinate screenCoord scene), pixel.coordinate

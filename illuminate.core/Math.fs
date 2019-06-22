@@ -6,20 +6,15 @@ module Math =
     let deg2rad angle =
         System.Math.PI * angle / 180.0;
     
-    let dotProduct (multiplier :Vector, multiplicand:Vector) = 
-        let x,y,z = multiplier
-        let x2, y2, z2 = multiplicand
-        x * x2 + y * y2 + z * z2
+    let dot multiplier multiplicand = 
+        multiplier.x * multiplicand.x + multiplier.y * multiplicand.y + multiplier.z * multiplicand.z
     
-    let cross multiplier multiplicand : Vector = 
-        let ax,ay,az = multiplier
-        let bx, by, bz = multiplicand
-        (ay*bz - az*by, az*bx - ax*bz, ax*by - ay*bx)
+    let cross multiplier multiplicand = 
+        {x = multiplier.x*multiplicand.z - multiplier.z*multiplicand.y; y = multiplier.z*multiplicand.x - multiplier.x*multiplicand.z; z = multiplier.x*multiplicand.y - multiplier.y*multiplicand.x}
     
-    let inverseMag (mag2:float, v:Vector) : Normal = 
-        let x,y,z = v
+    let inverseMag mag2 v = 
         let invMag = 1. / sqrt mag2
-        (x * invMag, y * invMag, z * invMag)
+        {x = v.x * invMag; y = v.y * invMag; z = v.z * invMag}
 
     let calculateQ discr a b c = 
         let q =
@@ -47,62 +42,36 @@ module Math =
             | false, true -> (true, -0.5 * b / a, -0.5 * b / a)
             | false, false -> calculateQ discr a b c
 
-    let normalizeVector (v:Vector) : Normal = 
-        let x,y,z = v
-        let mag2 = dotProduct(v, v)
+    let normalizeVector v = 
+        let mag2 = dot v v
         match mag2 > 0. with
-            | true -> inverseMag (mag2, v)
-            | false -> (x, y, z)
+            | true -> inverseMag mag2 v
+            | false -> v
     
-    let convertNormalToDirection (normal:Normal) : Direction =
-        let x,y,z = normal
-        {dirX = x; dirY = y; dirZ = z}
+    let convertCoordinateToDirection n =
+        {dirX = n.x; dirY = n.y; dirZ = n.z}
     
-    let convertDirectionToNormal (direction:Direction) : Normal =
-        (direction.dirX, direction.dirY, direction.dirZ)
-
-    let convertDirectionToVector (direction:Direction) : Vector =
-        (direction.dirX, direction.dirY, direction.dirZ)
+    let convertDirectionToCoordinate direction =
+        {x = direction.dirX; y = direction.dirY; z = direction.dirZ}
     
-    let convertNormalToVector (normal:Normal) : Vector =
-        let x,y,z = normal
-        (x,y,z)
-    
-    let convertVectorToNormal (vector:Vector) : Normal =
-        let x,y,z = vector
-        (x,y,z)
-    
-    let convertWorldCoordinateToVector (wc:WorldCoordinate) : Vector =
-        (wc.x, wc.y, wc.z)
-    
-    let normalizeDirection (v:Direction) : Normal = 
-        convertDirectionToVector(v) |> normalizeVector
-    
-    let getDirectionFromVector vector =
-        let x,y,z = vector
-        {dirX = x; dirY = y; dirZ = z}
+    let normalizeDirection d = 
+        d |> convertDirectionToCoordinate |> normalizeVector
         
-    let normalizeWorld (worldCoordinate, pixel:ScreenCoordinate) = 
+    let normalizeWorld (worldCoordinate,pixel:ScreenCoordinate) = 
         let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
         {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }, pixel
     
-    let worldSubWorld point origin : Vector = 
-        (point.x - origin.x, point.y - origin.y, point.z - origin.z)
+    let worldSubWorld p o = 
+        {x = p.x - o.x; y = p.y - o.y; z = p.z - o.z}
 
-    let addVectorToPoint point vector = 
-        let x,y,z = vector
-        {x = point.x + x; y = point.y + y; z = point.z + z}
+    let addVectorToPoint p v = 
+        {x = p.x + v.x; y = p.y + v.y; z = p.z + v.z}
     
-    let subVectorFromPoint point vector = 
-        let x,y,z = vector
-        {x = point.x - x; y = point.y + y; z = point.z + z}
+    let subVectorFromPoint p v = 
+        {x = p.x - v.x; y = p.y - v.y; z = p.z - v.z}
     
-    let multiplyVector (vector:Vector, scale:float) : Vector = 
-        let x,y,z = vector
-        (x * scale, y * scale, z * scale)
-    
-    let calculateColorIntensity color luminosity = 
-        {r = color.r * luminosity; g = color.g * luminosity; b = color.b * luminosity}
+    let multiplyVector v scale = 
+        {x = v.x * scale; y = v.y * scale; z = v.z * scale}
     
     let invertDirection dir =
         {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }
@@ -115,13 +84,13 @@ module Math =
     let isInTriangle N point t =
         let edge0 = worldSubWorld t.v1 t.v0
         let pv0 = worldSubWorld point t.v0
-        let edge0Check = dotProduct(N, (cross edge0 pv0))
+        let edge0Check = dot N (cross edge0 pv0)
 
         let edge1 = worldSubWorld t.v2 t.v1
         let pv1 = worldSubWorld point t.v1
-        let edge1Check = dotProduct(N, (cross edge1 pv1))
+        let edge1Check = dot N (cross edge1 pv1)
 
         let edge2 = worldSubWorld t.v0 t.v2
         let pv2 = worldSubWorld point t.v2
-        let edge2Check = dotProduct(N, (cross edge2 pv2))
+        let edge2Check = dot N (cross edge2 pv2)
         (edge0Check < 0., edge1Check < 0., edge2Check < 0.)

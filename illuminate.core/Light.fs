@@ -6,10 +6,13 @@ open Illuminate.Intersection
 open Illuminate.Hit
 
 module Light = 
+    let calculateColorIntensity color luminosity = 
+        {r = color.r * luminosity; g = color.g * luminosity; b = color.b * luminosity}
+        
     let calculateHDotL lightDirection hitObj = 
-        let hitVector = hitObj.normal |> normalizeVector |> convertNormalToVector
-        let inverseDirection = lightDirection |> invertDirection |> convertDirectionToVector
-        let value = dotProduct (hitVector, inverseDirection)
+        let hitVector = hitObj.normal |> normalizeVector
+        let inverseDirection = lightDirection |> invertDirection |> convertDirectionToCoordinate
+        let value = dot hitVector inverseDirection
         max 0. value
 
     let illuminateDistantLight light hitObj = 
@@ -25,13 +28,12 @@ module Light =
         {lightDistance = 0.; lightDirection = {dirX = 0.; dirY = 0.; dirZ = 0.}; luminosity = {r = 0.; b = 0.; g = 0.} }
     
     let illuminatePointLight light hitObj = 
-        let lightVector = (worldSubWorld hitObj.point light.pointOrigin)
-        let r2 = dotProduct (lightVector, lightVector)
+        let lightVector = worldSubWorld hitObj.point light.pointOrigin
+        let r2 = dot lightVector lightVector
         let distance = sqrt r2
-        let x,y,z = lightVector
 
-        //normalize the ligth direction based on distance
-        let normalLightDir = {dirX = x / distance; dirY = y / distance; dirZ = z /distance}
+        //normalize the light direction based on distance
+        let normalLightDir = {dirX = lightVector.x / distance; dirY = lightVector.y / distance; dirZ = lightVector.z / distance}
 
         //get initial luminosity
         let luminosity = calculateColorIntensity light.luminosity light.intensity

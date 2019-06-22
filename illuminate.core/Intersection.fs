@@ -5,7 +5,7 @@ open Illuminate.Coordinate
 
 module Intersection = 
     let calculateShadowPoint ray point normal = 
-        let biasNormal = multiplyVector (normal, bias)
+        let biasNormal = multiplyVector normal bias
         addVectorToPoint point biasNormal
 
     let calcHitPoint origin ray tnear = 
@@ -25,10 +25,10 @@ module Intersection =
 
     let intersectSphere origin ray sphere = 
         let l = worldSubWorld origin sphere.origin
-        let rayAsVector = convertDirectionToVector ray
-        let a = dotProduct (rayAsVector, rayAsVector)
-        let b = 2. * dotProduct(rayAsVector, l)
-        let c = dotProduct(l, l) - (sphere.radius * sphere.radius)
+        let v = convertDirectionToCoordinate ray
+        let a = dot v v
+        let b = 2. * (dot v l)
+        let c = (dot l l) - (sphere.radius * sphere.radius)
         let solQ, t0, t1 = solveQuadratic a b c
 
         match solQ, t0 < 0., t1 < 0. with
@@ -38,16 +38,16 @@ module Intersection =
             | true, true, true -> None
 
     let intersectPlane origin ray plane =
-        let denom = dotProduct ((ray |> convertDirectionToVector), (plane.planeNormal |> convertNormalToVector))
+        let denom = dot (ray |> convertDirectionToCoordinate) plane.planeNormal
         let testRay = worldSubWorld plane.planePoint origin
-        let t =  dotProduct(testRay, plane.planeNormal |> convertNormalToVector) / denom
+        let t =  dot testRay plane.planeNormal / denom
         match abs denom > epsilon, t >= 0. with 
             | true, true -> Some(calculateHitPointPlane origin ray t plane)
             | _ -> None
     
     let intersectTriangle origin ray t =
         let N = getTriangleNormal t
-        let plane = {planePoint = t.v0; planeNormal = N |> convertVectorToNormal; color = t.color}
+        let plane = {planePoint = t.v0; planeNormal = N; color = t.color}
 
         //check and see if it hits the plane of the triangle
         let hitsPlane = intersectPlane origin ray plane

@@ -5,7 +5,7 @@ open Illuminate.Material
 open Illuminate.Hit
 
 module Ray = 
-    let castRay (ray:Direction,pixel:ScreenCoordinate) (scene:Scene) =
+    let castRay scene (ray,pixel)  =
         (*
             Stupid debugging needed
         *)
