@@ -6,13 +6,7 @@ open Illuminate.Hit
 
 module Ray = 
     let castRay scene (ray,pixel)  =
-        (*
-            Stupid debugging needed
-        *)
-        if pixel.i = 430 && pixel.j = 310
-        then 
-            printf ""
-        
+        debug pixel scene
         
         let hit = getHitPoint ray scene.camera scene
         let hitColor = 

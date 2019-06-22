@@ -7,7 +7,7 @@ open Illuminate.Coordinate
 
 module CoordinateTests = 
     let getRasterPlane =
-        {width = 640; height = 480; fov = 90; shapes = List.empty; lights = List.empty; camera = {x = 0.; y = 0.; z = 0.}}
+        {width = 640; height = 480; fov = 90; shapes = List.empty; lights = List.empty; camera = {x = 0.; y = 0.; z = 0.}; debugi = None; debugj = None; debug = false}
 
     [<Fact>]
     let ``can convert top left edge screen coordinate to world coordinate`` () =

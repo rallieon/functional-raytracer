@@ -2,6 +2,9 @@
     "width": 640,
     "height": 640,
     "fov": 90,
+    "debug": true,
+    "debugi": 430,
+    "debugj": 200,
     "shapes": [{
         "Triangle": {
             "v0": {

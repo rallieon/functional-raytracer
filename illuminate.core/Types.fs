@@ -35,7 +35,7 @@ module Types =
 
     type LightHitPoint = {lightDistance: float; lightDirection: Direction; luminosity: Color}
     (* Scene *)
-    type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
+    type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera; debugi: int option; debugj: int option; debug: bool}
 
     [<Literal>]
     let infinity = System.Double.MaxValue
@@ -45,3 +45,14 @@ module Types =
 
     [<Literal>]
     let bias = 0.0001
+
+    let debug pixel scene =
+        let checkVal i j =
+            match scene.debug, i = pixel.i, j = pixel.j with
+            | true, true, true -> printf ""
+            | _ -> ()
+
+        match scene.debugi, scene.debugj with 
+            | Some i, Some j -> checkVal i j
+            | None, _ -> ()
+            | Some i, _ -> ()
