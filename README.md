@@ -102,7 +102,6 @@ Illuminate has a manual versioning increment policy, but the physical publishing
 
 ## Action Items
 
-- Debugging Combinator
 - Specular lighting
 - Mesh Loading & Intersection
 - Soft Shadows
