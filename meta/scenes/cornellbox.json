@@ -2,9 +2,9 @@
     "width": 640,
     "height": 640,
     "fov": 90,
-    "debug": true,
-    "debugi": 300,
-    "debugj": 530,
+    "debug": false,
+    "debugi": 430,
+    "debugj": 200,
     "shapes": [{
         "Triangle": {
             "v0": {
@@ -234,24 +234,6 @@
                 "r": 255,
                 "g": 255,
                 "b": 255
-            }
-        }
-    }, {
-        "Box": {
-            "vMin": {
-                "x": -0.5,
-                "y": -2,
-                "z": -4
-            },
-            "vMax": {
-                "x": 0,
-                "y": -1.5,
-                "z": -3.5
-            },
-            "color": {
-                "r": 255,
-                "g": 255,
-                "b": 0
             }
         }
     }],

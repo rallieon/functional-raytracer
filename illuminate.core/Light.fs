@@ -61,5 +61,9 @@ module Light =
         let inShadow = getHitPoint invertedDirection hitObj.shadowOrigin scene
 
         match inShadow with
-            | Some shadowHit -> {r = 0.; g = 0.; b = 0.}
+            | Some shadowHit -> 
+                //make sure its no the same object
+                match shadowHit.shape = hitObj.shape with
+                    | true -> lightHit.luminosity
+                    | false -> {r = 0.; g = 0.; b = 0.}
             | _ -> lightHit.luminosity

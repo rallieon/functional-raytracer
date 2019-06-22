@@ -17,10 +17,12 @@ module Types =
     type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
     type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
     type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color}
+    type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane
         | Triangle of Triangle
+        | Box of Box
 
     type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 
@@ -35,7 +37,7 @@ module Types =
 
     type LightHitPoint = {lightDistance: float; lightDirection: Direction; luminosity: Color}
     (* Scene *)
-    type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
+    type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera; debugi: int option; debugj: int option; debug: bool}
 
     [<Literal>]
     let infinity = System.Double.MaxValue
@@ -45,3 +47,14 @@ module Types =
 
     [<Literal>]
     let bias = 0.0001
+
+    let debug pixel scene =
+        let checkVal i j =
+            match scene.debug, i = pixel.i, j = pixel.j with
+            | true, true, true -> printf ""
+            | _ -> ()
+
+        match scene.debugi, scene.debugj with 
+            | Some i, Some j -> checkVal i j
+            | None, _ -> ()
+            | Some i, _ -> ()

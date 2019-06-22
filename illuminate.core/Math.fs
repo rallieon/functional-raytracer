@@ -10,7 +10,11 @@ module Math =
         multiplier.x * multiplicand.x + multiplier.y * multiplicand.y + multiplier.z * multiplicand.z
     
     let cross multiplier multiplicand = 
-        {x = multiplier.x*multiplicand.z - multiplier.z*multiplicand.y; y = multiplier.z*multiplicand.x - multiplier.x*multiplicand.z; z = multiplier.x*multiplicand.y - multiplier.y*multiplicand.x}
+        {
+            x = (multiplier.y * multiplicand.z) - (multiplier.z * multiplicand.y);
+            y = (multiplier.z * multiplicand.x) - (multiplier.x * multiplicand.z);
+            z = (multiplier.x * multiplicand.y) - (multiplier.y * multiplicand.x);
+        }
     
     let inverseMag mag2 v = 
         let invMag = 1. / sqrt mag2

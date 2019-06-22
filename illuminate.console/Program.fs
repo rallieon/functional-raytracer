@@ -22,4 +22,4 @@ let main argv =
     timer.Start()
     let t = render scene
     printfn "Elapsed Time: %i" timer.ElapsedMilliseconds
-    writeScene(t, scene, outputPath)
+    writeScene t scene outputPath
