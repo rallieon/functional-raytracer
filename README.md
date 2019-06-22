@@ -102,6 +102,8 @@ Illuminate has a manual versioning increment policy, but the physical publishing
 
 ## Action Items
 
+- Debugging Combinator
+- Better Image Library than skia
 - Specular lighting
 - Mesh Loading & Intersection
 - Soft Shadows
