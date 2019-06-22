@@ -25,5 +25,3 @@ module Render =
             |> List.map renderRay
 
         renderedPixels
-
- 
