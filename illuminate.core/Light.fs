@@ -48,7 +48,7 @@ module Light =
 
         {lightDistance = distance; lightDirection = normalLightDir; luminosity = hitPointLuminosity }
 
-    let getLightIntensity light scene hitObj =
+    let getLightIntensity scene hitObj light =
         let lightHit = 
             match light with
             | PointLight pl -> illuminatePointLight pl hitObj
