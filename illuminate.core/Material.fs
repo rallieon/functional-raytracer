@@ -11,6 +11,7 @@ module Material =
                 | Sphere s -> s.color
                 | Plane p -> p.color
                 | Triangle t -> t.color
+                | Box b -> b.color
         
         let addColor color intensity =
             let r = color.r + shapeColor.r * intensity.r
