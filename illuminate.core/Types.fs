@@ -1,11 +1,12 @@
 ﻿namespace Illuminate
-open Illuminate.MathTypes
 
 module Types = 
     (* Framework *)
     type WorldCoordinate = {x: float; y: float; z: float}
     type Direction =  {dirX: float; dirY: float; dirZ: float}
     type Camera = WorldCoordinate
+    type Vector = WorldCoordinate
+    type Normal = WorldCoordinate
     type Ray = {direction: Direction; origin: WorldCoordinate}
     type Color = { r: float; g: float; b: float }
     type ScreenCoordinate = { i: int; j: int; }
@@ -36,7 +37,11 @@ module Types =
     (* Scene *)
     type Scene = { width: int; height: int; fov: int; shapes: Shape list; lights: Light list; camera: Camera}
 
-    [<Literal>] 
+    [<Literal>]
     let infinity = System.Double.MaxValue
-    [<Literal>] 
+
+    [<Literal>]
     let epsilon = 0.000001
+
+    [<Literal>]
+    let bias = 0.0001

@@ -12,12 +12,13 @@ module MathTests =
         let angle = 20.
         let convert = deg2rad angle
         Assert.Equal(0.35, convert, 2)
+        
     [<Fact>]
     let ``can perform dot product`` () =
-        let vec1 = (2.0,3.0,4.0)
-        let vec2 = (4.0,5.0,6.0)
+        let vec1 = {x = 2.0; y = 3.0; z = 4.0}
+        let vec2 = {x = 4.0; y = 5.0; z = 6.0}
 
-        let result = dotProduct (vec1, vec2)
+        let result = dot vec1 vec2
         Assert.Equal(47.0, result, 2)
     
     [<Fact>]
@@ -31,7 +32,7 @@ module MathTests =
     
     [<Fact>]
     let ``can subtract world coordinates`` () =
-        let x,y,z = worldSubWorld {x = 2.0; y = 2.0; z = -5.0} {x = 0.0; y = 0.0; z = 0.0}
-        Assert.Equal(2.0, x)
-        Assert.Equal(2.0, y)
-        Assert.Equal(-5.0, z)
+        let v = worldSubWorld {x = 2.0; y = 2.0; z = -5.0} {x = 0.0; y = 0.0; z = 0.0}
+        Assert.Equal(2.0, v.x)
+        Assert.Equal(2.0, v.y)
+        Assert.Equal(-5.0, v.z)
