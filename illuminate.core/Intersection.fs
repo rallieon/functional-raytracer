@@ -115,10 +115,6 @@ module Intersection =
                         let N = getBoxNormal b h
                         let shadowPoint = calculateShadowPoint ray h N
                         Some({shape = Box b; t = tMin; point = h; normal = N; shadowOrigin = shadowPoint})
-                    
-            
-    let intersectMesh origin ray m =
-        Some({shape = TriangleMesh m; t = 0.; point = {x = 0.; y = 0.; z = 0.}; normal = {x = 0.; y = 0.; z = 0.}; shadowOrigin = {x = 0.; y = 0.; z = 0.}})
 
     let intersect origin ray shape =
         match (shape) with
@@ -126,4 +122,4 @@ module Intersection =
             | Plane plane -> intersectPlane origin ray plane
             | Triangle t -> intersectTriangle origin ray t
             | Box b -> intersectBox origin ray b
-            | TriangleMesh m -> intersectMesh origin ray m
+            | TriangleMesh m -> None //do nothing because the triangles have already been added to scene

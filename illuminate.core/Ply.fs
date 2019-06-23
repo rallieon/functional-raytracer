@@ -6,8 +6,8 @@ open System.Text.RegularExpressions
 #nowarn "25"
 
 module Ply =
-    type Vertice = V of float * float * float
-    type Face = F of int * int * int
+    type Vertice = float * float * float
+    type Face = int * int * int
 
     let readLines (fullPath:string) = 
         seq {
@@ -125,7 +125,7 @@ module Ply =
             let x = pick 0
             let y = pick 1
             let z = pick 2
-            V(float x, float y, float z) |> Success
+            (float x, float y, float z) |> Success
 
     let parseVertices (vertices: seq<string>) = Seq.map stringToVertice vertices |> outerSuccess
 
@@ -139,7 +139,7 @@ module Ply =
             let x = Array.item 0 splitted
             let y = Array.item 1 splitted
             let z = Array.item 2 splitted
-            F(int x, int y, int z) |> Success
+            (int x, int y, int z) |> Success
 
     let parseFaces (faces: seq<string>) =
         faces |> Seq.map stringToFace |> outerSuccess
