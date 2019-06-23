@@ -3,20 +3,19 @@ namespace Illuminate
 open System.IO
 open System.Text.RegularExpressions
 
-module Ply
-    // The types in a PLY file (at least in the ones we use)
-    type Vertice = V of float * float * float;;
-    type Face = F of int * int * int;;
+#nowarn "25"
 
-    /// <summary>Read all lines in a file into a sequence of strings.</summary>
-    /// <param name="fileName">Name of file to be parsed - must be situated in Resources folder.</param>
-    /// <returns>A sequence of the lines in the file.</returns>
-        let readLines (fullPath:string) = 
-        seq { use sr = new StreamReader (fullPath)
-                while not sr.EndOfStream do
-                    yield sr.ReadLine() };;
+module Ply =
+    type Vertice = V of float * float * float
+    type Face = F of int * int * int
 
-    // not-mutable values to be assigned during parsing.
+    let readLines (fullPath:string) = 
+        seq {
+            use sr = new StreamReader (fullPath)
+            while not sr.EndOfStream do
+                yield sr.ReadLine() 
+        }
+
     type ParserResult = 
         {
             VertexCount : int
@@ -37,10 +36,10 @@ module Ply
                 Vertices = Seq.empty
                 Faces = Seq.empty
             }
-    // Malformed lines in the PLY file? Raise this exception.
+    
     type ParserSuccess<'a> =
-    | Success of 'a
-    | Failure of string
+        | Success of 'a
+        | Failure of string
 
     let map f aPS=
         match aPS with 
@@ -57,6 +56,7 @@ module Ply
         | Success x -> f x
         | Failure s -> Failure s
 
+    
     let outerSuccess<'a> (seqIn: ParserSuccess<'a> seq) = 
         let containsFailure = 
             seqIn
@@ -68,7 +68,7 @@ module Ply
         | true ->
             Failure ("Could be a litte bit more precise: Failure in " + (typeof<'a>).ToString())
         | false ->
-            Success( Seq.map (fun s -> match s with | Success(v) -> v ) seqIn)
+            Success( Seq.map (fun s -> match s with | Success(v) -> v) seqIn)
 
     //exception ParseError of string;;
 
@@ -76,93 +76,74 @@ module Ply
     /// <param name="s">The string to check.</param>
     /// <param name="r">The regex to match.</param>
     /// <returns>Whether or not the string matches the regex.</returns>
-    let matchesRegex s r =
-    Regex.Match(s, r).Success
+    let matchesRegex s r = Regex.Match(s, r).Success
 
     /// <summary>Parse the header of a PLY file into predefined, mutable values.</summary>
     /// <param name="header">A sequence of the header lines in a PLY file, not including "end_header".</param>
     /// <exception cref="ParseError">Raised when the input is not recognized as anything useful.</exception>
     let parseHeader (header: seq<string>) = 
-
         let parseHeaderRaw accPS (line:string) = 
-        match accPS with 
-        | Failure (_) -> accPS
-        | Success (parserResult) -> 
-            let splitted = line.Split[|' '|]
-            match line with
-            | x when matchesRegex x @"obj_info .*"                ->
-                let a = Array.item 1 splitted
-                let b = Array.item 2 splitted
-                {  parserResult with ObjectInfo = parserResult.ObjectInfo@[(a, b)]} |> Success
-            | x when matchesRegex x @"element vertex \d*"         ->
-                {  parserResult with VertexCount =  int (Array.item 2 splitted)} |> Success
-            | x when matchesRegex x @"property list .*"           ->
-                let a = Array.item 2 splitted
-                let b = Array.item 3 splitted
-                {  parserResult with FaceProperties =  (a, b)}
-                |> Success
-            | x when matchesRegex x @"property .*"                ->
-                let a = Array.item 1 splitted
-                let b = Array.item 2 splitted
-                {  parserResult with VertexProperties =  parserResult.VertexProperties@[(a, b)]}
-                |> Success
-            | x when matchesRegex x @"element face \d*"           ->
-                {  parserResult with FaceCount =  int (Array.item 2 splitted)}
-                |> Success
-            | x when ((x = "ply") || matchesRegex x @"format .*") -> Success parserResult
-            | _                                                   -> 
-                Failure "Malformed header."  
+            match accPS with 
+            | Failure (_) -> accPS
+            | Success (parserResult) -> 
+                let splitted = line.Split[|' '|]
+                match line with
+                | x when matchesRegex x @"obj_info .*"                ->
+                    let a = Array.item 1 splitted
+                    let b = Array.item 2 splitted
+                    {  parserResult with ObjectInfo = parserResult.ObjectInfo@[(a, b)]} |> Success
+                | x when matchesRegex x @"element vertex \d*"         ->
+                    {  parserResult with VertexCount =  int (Array.item 2 splitted)} |> Success
+                | x when matchesRegex x @"property list .*"           ->
+                    let a = Array.item 2 splitted
+                    let b = Array.item 3 splitted
+                    {  parserResult with FaceProperties =  (a, b)}
+                    |> Success
+                | x when matchesRegex x @"property .*"                ->
+                    let a = Array.item 1 splitted
+                    let b = Array.item 2 splitted
+                    {  parserResult with VertexProperties =  parserResult.VertexProperties@[(a, b)]}
+                    |> Success
+                | x when matchesRegex x @"element face \d*"           ->
+                    {  parserResult with FaceCount =  int (Array.item 2 splitted)}
+                    |> Success
+                | x when ((x = "ply") || matchesRegex x @"format .*") -> Success parserResult
+                | x when matchesRegex x @"comment .*" -> Success parserResult
+                | _                                                   -> 
+                    Failure "Malformed header."  
 
-        header
-        |> Seq.fold parseHeaderRaw  (ParserResult.Init() |> Success)
+        header |> Seq.fold parseHeaderRaw  (ParserResult.Init() |> Success)
 
-    /// <summary>Convert a string to a vertice.</summary>
-    /// <param name="s">String containing a vertice.</param>
-    /// <returns>The converted vertice.</returns>
-    /// <exception cref="ParseError">Raised when the length of the input string is less that 3.</exception>
     let stringToVertice (s: string) =
-    match s with
-    | s when s.Length < 3 -> System.Console.WriteLine(s)
-                                sprintf "Malformed vertices: %s" s |> Failure 
-    | _                   -> let splitted = s.Split[|' '|]
-                                let pick  i = Array.item i splitted
-                                let x = pick 0
-                                let y = pick 1
-                                let z = pick 2
-                                V(float x, float y, float z) |> Success
+        match s with
+        | s when s.Length < 3 -> 
+            System.Console.WriteLine(s)
+            sprintf "Malformed vertices: %s" s |> Failure 
+        | _ -> 
+            let splitted = s.Split[|' '|]
+            let pick  i = Array.item i splitted
+            let x = pick 0
+            let y = pick 1
+            let z = pick 2
+            V(float x, float y, float z) |> Success
 
-    /// <summary>Convert a sequence of strings to a sequence of vertices.</summary>
-    /// <param name="vertices">Sequence of strings to convert.</param>
-    /// <returns>A sequence of the converted sequences.</returns>
-    let parseVertices (vertices: seq<string>) =
-    Seq.map stringToVertice vertices 
-    |> outerSuccess
+    let parseVertices (vertices: seq<string>) = Seq.map stringToVertice vertices |> outerSuccess
 
-
-    /// <summary>Convert a string to a face.</summary>
-    /// <param name="s">String containing a face.</param>
-    /// <returns>The converted face.</returns>
-    /// <exception cref="ParseError">Raised when the length of the input string is less that 3.</exception>
     let stringToFace (s: string) =
-    match s with
-    | s when s.Length < 3 -> System.Console.WriteLine(s)
-                                sprintf "Malformed vertices: %s" s |> Failure                             
-    | _                   -> let splitted = s.Split[|' '|]
-                                let x = Array.item 0 splitted
-                                let y = Array.item 1 splitted
-                                let z = Array.item 2 splitted
-                                F(int x, int y, int z) |> Success
+        match s with
+        | s when s.Length < 3 -> 
+            System.Console.WriteLine(s)
+            sprintf "Malformed vertices: %s" s |> Failure                             
+        | _ -> 
+            let splitted = s.Split[|' '|]
+            let x = Array.item 0 splitted
+            let y = Array.item 1 splitted
+            let z = Array.item 2 splitted
+            F(int x, int y, int z) |> Success
 
-    /// <summary>Convert a sequence of strings to a sequence of faces.</summary>
-    /// <param name="faces">Sequence of strings to convert.</param>
-    /// <returns>A sequence of the converted faces.</returns>
     let parseFaces (faces: seq<string>) =
-        faces 
-        |> Seq.map stringToFace 
-        |> outerSuccess
+        faces |> Seq.map stringToFace |> outerSuccess
 
-    /// <summary>Main function in PLY parsing. Calls all helper functions and assigns the required mutable values.</summary>
-    /// <param name="fileName">File to be parsed - name of file in Resources folder.</param>
     let parsePLYFile fileName =
         let lines = readLines fileName
         // At which index is the header located? The vertices? The faces?

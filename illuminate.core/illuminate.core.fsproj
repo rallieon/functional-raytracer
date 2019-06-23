@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Ply.fs" />
     <Compile Include="Math.fs" />
     <Compile Include="Coordinate.fs" />
     <Compile Include="Intersection.fs" />

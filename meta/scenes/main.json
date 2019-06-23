@@ -8,6 +8,7 @@
     "shapes": [{
         "TriangleMesh": {
             "filePath": "./meta/models/pyramid.ply",
+            "triangles": [],
             "color": {
                 "r": 255,
                 "g": 0,
