@@ -18,11 +18,13 @@ module Types =
     type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
     type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color}
     type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
+    type TriangleMesh = {filePath: string; color:  Color}
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane
         | Triangle of Triangle
         | Box of Box
+        | TriangleMesh of TriangleMesh
 
     type HitPoint = {shape: Shape; t: float; point: WorldCoordinate; normal: Normal; shadowOrigin: WorldCoordinate}
 

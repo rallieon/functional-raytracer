@@ -104,5 +104,6 @@ Illuminate has a manual versioning increment policy, but the physical publishing
 
 - Specular lighting
 - Mesh Loading & Intersection
+- Acceleration Structures
 - Soft Shadows
 - Antialiasing
