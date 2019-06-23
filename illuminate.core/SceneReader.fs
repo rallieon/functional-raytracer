@@ -1,5 +1,6 @@
 namespace Illuminate
 open Illuminate.Types
+open Illuminate.Math
 open FSharp.Json
 open System.IO
 open Illuminate.Ply
@@ -9,10 +10,18 @@ module SceneReader =
         let addFace tm result face =
             let face0, face1, face2 = face
             let listVert = Seq.toList result.Vertices
-            let v0x, v0y, v0z = listVert.[face0]
-            let v1x, v1y, v1z = listVert.[face1]
-            let v2x, v2y, v2z = listVert.[face2]
-            Triangle {v0 = {x = v0x; y = v0y; z = v0z}; v1 = {x = v1x; y = v1y; z = v1z}; v2 = {x = v2x; y = v2y; z = v2z}; color = tm.color}
+            let v0x, v0y, v0z, n0x, n0y, n0z = listVert.[face0]
+            let v1x, v1y, v1z, n1x, n1y, n1z = listVert.[face1]
+            let v2x, v2y, v2z, n2x, n2y, n2z = listVert.[face2]
+            let unnormalized = {x = (n0x + n1y + n2z) / 3.; y = (n0y + n1y + n1y) / 3.; z = (n0z + n1z + n2z) / 3. }
+            let N = normalizeVector unnormalized
+            Triangle {
+                v0 = {x = v0x; y = v0y; z = v0z}; 
+                v1 = {x = v1x; y = v1y; z = v1z}; 
+                v2 = {x = v2x; y = v2y; z = v2z}; 
+                color = tm.color;
+                triangleNormal = Some(N)
+            }
             
         let addTriangles tm result =
             let face = addFace tm result

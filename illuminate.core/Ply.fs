@@ -6,7 +6,7 @@ open System.Text.RegularExpressions
 #nowarn "25"
 
 module Ply =
-    type Vertice = float * float * float
+    type Vertice = float * float * float * float * float * float
     type Face = int * int * int
 
     let readLines (fullPath:string) = 
@@ -116,7 +116,7 @@ module Ply =
 
     let stringToVertice (s: string) =
         match s with
-        | s when s.Length < 3 -> 
+        | s when s.Length < 6 -> 
             System.Console.WriteLine(s)
             sprintf "Malformed vertices: %s" s |> Failure 
         | _ -> 
@@ -125,20 +125,23 @@ module Ply =
             let x = pick 0
             let y = pick 1
             let z = pick 2
-            (float x, float y, float z) |> Success
+            let nx = pick 3
+            let ny = pick 4
+            let nz = pick 5
+            (float x, float y, float z, float nx, float ny, float nz) |> Success
 
     let parseVertices (vertices: seq<string>) = Seq.map stringToVertice vertices |> outerSuccess
 
     let stringToFace (s: string) =
         match s with
-        | s when s.Length < 3 -> 
+        | s when s.Length < 4 -> 
             System.Console.WriteLine(s)
             sprintf "Malformed vertices: %s" s |> Failure                             
         | _ -> 
             let splitted = s.Split[|' '|]
-            let x = Array.item 0 splitted
-            let y = Array.item 1 splitted
-            let z = Array.item 2 splitted
+            let x = Array.item 1 splitted
+            let y = Array.item 2 splitted
+            let z = Array.item 3 splitted
             (int x, int y, int z) |> Success
 
     let parseFaces (faces: seq<string>) =

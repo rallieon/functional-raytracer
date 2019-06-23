@@ -81,9 +81,12 @@ module Math =
         {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }
     
     let getTriangleNormal t =
-        let A = worldSubWorld t.v1 t.v0
-        let B = worldSubWorld t.v2 t.v0
-        cross A B
+        match t.triangleNormal with
+            | Some n -> n
+            | None ->
+                let A = worldSubWorld t.v1 t.v0
+                let B = worldSubWorld t.v2 t.v0
+                cross A B
     
     let isInTriangle N point t =
         let edge0 = worldSubWorld t.v1 t.v0

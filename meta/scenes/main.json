@@ -7,7 +7,7 @@
     "debugj": 530,
     "shapes": [{
         "TriangleMesh": {
-            "filePath": "./meta/models/pyramid.ply",
+            "filePath": "./meta/models/pyramidwithnormals.ply",
             "triangles": [],
             "color": {
                 "r": 255,

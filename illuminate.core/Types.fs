@@ -16,7 +16,7 @@ module Types =
     (* Shapes *)
     type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
     type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
-    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color}
+    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option}
     type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
     type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list}
     type Shape = 
