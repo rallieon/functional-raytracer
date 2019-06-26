@@ -13,14 +13,20 @@ module SceneReader =
             let v0x, v0y, v0z, n0x, n0y, n0z = listVert.[face0]
             let v1x, v1y, v1z, n1x, n1y, n1z = listVert.[face1]
             let v2x, v2y, v2z, n2x, n2y, n2z = listVert.[face2]
-            let unnormalized = {x = (n0x + n1y + n2z) / 3.; y = (n0y + n1y + n1y) / 3.; z = (n0z + n1z + n2z) / 3. }
-            let N = normalizeVector unnormalized
+
+            let N = 
+                match n0x = 0., n0y = 0., n0z = 0. with
+                    | true, true, true -> None
+                    | _ -> 
+                        let unnormalized = {x = (n0x + n1y + n2z) / 3.; y = (n0y + n1y + n1y) / 3.; z = (n0z + n1z + n2z) / 3. }
+                        Some(normalizeVector unnormalized)
+
             Triangle {
                 v0 = {x = v0x; y = v0y; z = v0z}; 
                 v1 = {x = v1x; y = v1y; z = v1z}; 
                 v2 = {x = v2x; y = v2y; z = v2z}; 
                 color = tm.color;
-                triangleNormal = Some(N)
+                triangleNormal = N
             }
             
         let addTriangles tm result =

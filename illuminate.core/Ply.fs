@@ -115,30 +115,34 @@ module Ply =
         header |> Seq.fold parseHeaderRaw  (ParserResult.Init() |> Success)
 
     let stringToVertice (s: string) =
-        match s with
-        | s when s.Length < 6 -> 
+        let splitted = s.Split[|' '|]
+
+        match splitted with
+        | splitted when splitted.Length < 3 -> 
             System.Console.WriteLine(s)
             sprintf "Malformed vertices: %s" s |> Failure 
         | _ -> 
-            let splitted = s.Split[|' '|]
+            
             let pick  i = Array.item i splitted
             let x = pick 0
             let y = pick 1
             let z = pick 2
-            let nx = pick 3
-            let ny = pick 4
-            let nz = pick 5
+            let nx,ny,nz = 
+                match splitted.Length = 6 with
+                | true -> pick 3, pick 4, pick 5
+                | false -> "0", "0", "0"
+                
             (float x, float y, float z, float nx, float ny, float nz) |> Success
 
     let parseVertices (vertices: seq<string>) = Seq.map stringToVertice vertices |> outerSuccess
 
     let stringToFace (s: string) =
-        match s with
-        | s when s.Length < 4 -> 
+        let splitted = s.Split[|' '|]
+        match splitted with
+        | splitted when splitted.Length < 4 -> 
             System.Console.WriteLine(s)
             sprintf "Malformed vertices: %s" s |> Failure                             
         | _ -> 
-            let splitted = s.Split[|' '|]
             let x = Array.item 1 splitted
             let y = Array.item 2 splitted
             let z = Array.item 3 splitted
