@@ -1,9 +1,9 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Coordinate
-open Illuminate.Intersection
-open Illuminate.Hit
+namespace Illuminate.Lighting
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Framework.Coordinate
+open Illuminate.Framework.Intersection
+open Illuminate.Framework.Hit
 
 module Light = 
     let calculateColorIntensity color luminosity = 
@@ -58,7 +58,7 @@ module Light =
         let invertedDirection = invertDirection lightHit.lightDirection
         
         //use the shadow origin to avoid shadow acne
-        let inShadow = getHitPoint invertedDirection hitObj.shadowOrigin scene
+        let inShadow = trace invertedDirection hitObj.shadowOrigin scene
 
         match inShadow with
             | Some shadowHit -> 

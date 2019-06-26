@@ -103,6 +103,7 @@ Illuminate has a manual versioning increment policy, but the physical publishing
 ## Action Items
 
 - Specular lighting
+- Acceleration Structures
 - Transformation Matrix
 - Soft Shadows
 - Antialiasing

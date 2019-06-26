@@ -1,10 +1,10 @@
 namespace Illuminate
 
 open Xunit
-open Illuminate.Types
-open Illuminate.Render
-open Illuminate.SceneReader
-open Illuminate.Coordinate
+open Illuminate.Framework.Types
+open Illuminate.Framework.Render
+open Illuminate.Interface.SceneReader
+open Illuminate.Framework.Coordinate
 
 module IntegrationTests = 
     let getScene =

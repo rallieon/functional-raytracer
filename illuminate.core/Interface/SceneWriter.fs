@@ -1,5 +1,5 @@
-namespace Illuminate
-open Illuminate.Types
+namespace Illuminate.Interface
+open Illuminate.Framework.Types
 open SixLabors.ImageSharp
 open SixLabors.ImageSharp.PixelFormats
 open System.IO

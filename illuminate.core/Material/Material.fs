@@ -1,7 +1,7 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Light
+namespace Illuminate.Material
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Lighting.Light
 
 module Material = 
     let getHitColor hitObj scene =
@@ -12,6 +12,7 @@ module Material =
                 | Plane p -> p.color
                 | Triangle t -> t.color
                 | Box b -> b.color
+                | TriangleMesh m -> m.color
         
         let addColor color intensity =
             let r = color.r + shapeColor.r * intensity.r

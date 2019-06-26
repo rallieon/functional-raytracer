@@ -1,10 +1,10 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Coordinate
-open Illuminate.Intersection
-open Illuminate.Light
-open Illuminate.Ray
+namespace Illuminate.Framework
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Framework.Coordinate
+open Illuminate.Framework.Intersection
+open Illuminate.Lighting.Light
+open Illuminate.Framework.Ray
 
 module Render = 
     let initPixels scene = 

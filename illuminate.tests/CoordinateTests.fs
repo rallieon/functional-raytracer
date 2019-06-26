@@ -1,9 +1,9 @@
 namespace Illuminate
 
 open Xunit
-open Illuminate.Math
-open Illuminate.Types
-open Illuminate.Coordinate
+open Illuminate.Framework.Math
+open Illuminate.Framework.Types
+open Illuminate.Framework.Coordinate
 
 module CoordinateTests = 
     let getRasterPlane =

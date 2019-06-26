@@ -3,17 +3,22 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Types.fs" />
-    <Compile Include="Math.fs" />
-    <Compile Include="Coordinate.fs" />
-    <Compile Include="Intersection.fs" />
-    <Compile Include="Hit.fs" />    
-    <Compile Include="Light.fs" />
-    <Compile Include="Material.fs" />
-    <Compile Include="Ray.fs" />
-    <Compile Include="Render.fs" />
-    <Compile Include="SceneReader.fs" />
-    <Compile Include="SceneWriter.fs" />
+    <Compile Include="Framework\Types.fs" />
+    <Compile Include="Interface\Ply.fs" />
+    <Compile Include="Framework\Math.fs" />
+    <Compile Include="Framework\Coordinate.fs" />
+    <Compile Include="Framework\Hit.fs" />
+    <Compile Include="Shapes\Sphere.fs" />
+    <Compile Include="Shapes\Box.fs" />
+    <Compile Include="Shapes\Plane.fs" />
+    <Compile Include="Shapes\Triangle.fs" />
+    <Compile Include="Framework\Intersection.fs" />
+    <Compile Include="Lighting\Light.fs" />
+    <Compile Include="Material\Material.fs" />
+    <Compile Include="Framework\Ray.fs" />
+    <Compile Include="Framework\Render.fs" />
+    <Compile Include="Interface\SceneReader.fs" />
+    <Compile Include="Interface\SceneWriter.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Json" Version="0.3.7" />
