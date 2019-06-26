@@ -1,15 +1,12 @@
 namespace Illuminate
 open Illuminate.Types
-open Illuminate.Intersection
+open Illuminate.Math
 
 module Hit = 
-    let chooseIntersection intersection =
-        match intersection with
-        | Some result -> result.t
-        | None -> 100000000.
-            
-    let getHitPoint ray origin scene =
-        let inter = intersect origin ray
-        scene.shapes
-            |> List.map inter
-            |> List.minBy chooseIntersection
+    let calculateShadowPoint ray point normal = 
+        let biasNormal = multiplyVector normal bias
+        addVectorToPoint point biasNormal
+
+    let calcHitPoint origin ray tnear = 
+        let evaluatedRay = {x = ray.dirX * tnear; y = ray.dirY * tnear; z = ray.dirZ * tnear}
+        {x = origin.x + evaluatedRay.x; y = origin.y + evaluatedRay.y; z = origin.z + evaluatedRay.z}

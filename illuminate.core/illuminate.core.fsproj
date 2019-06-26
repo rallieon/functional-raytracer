@@ -7,8 +7,12 @@
     <Compile Include="Ply.fs" />
     <Compile Include="Math.fs" />
     <Compile Include="Coordinate.fs" />
+    <Compile Include="Hit.fs" />
+    <Compile Include="Shapes\Sphere.fs" />
+    <Compile Include="Shapes\Box.fs" />
+    <Compile Include="Shapes\Plane.fs" />
+    <Compile Include="Shapes\Triangle.fs" />
     <Compile Include="Intersection.fs" />
-    <Compile Include="Hit.fs" />    
     <Compile Include="Light.fs" />
     <Compile Include="Material.fs" />
     <Compile Include="Ray.fs" />

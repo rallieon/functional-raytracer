@@ -3,6 +3,7 @@ open Illuminate.Types
 open Illuminate.Math
 open Illuminate.Material
 open Illuminate.Hit
+open Illuminate.Intersection
 
 module Ray = 
     let castRay scene (ray,pixel)  =
