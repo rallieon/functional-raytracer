@@ -1,4 +1,4 @@
-namespace Illuminate
+namespace Illuminate.Interface
 
 open System.IO
 open System.Text.RegularExpressions
@@ -70,17 +70,8 @@ module Ply =
         | false ->
             Success( Seq.map (fun s -> match s with | Success(v) -> v) seqIn)
 
-    //exception ParseError of string;;
-
-    /// <summary>Checks whether a string matches a certain regex.</summary>
-    /// <param name="s">The string to check.</param>
-    /// <param name="r">The regex to match.</param>
-    /// <returns>Whether or not the string matches the regex.</returns>
     let matchesRegex s r = Regex.Match(s, r).Success
 
-    /// <summary>Parse the header of a PLY file into predefined, mutable values.</summary>
-    /// <param name="header">A sequence of the header lines in a PLY file, not including "end_header".</param>
-    /// <exception cref="ParseError">Raised when the input is not recognized as anything useful.</exception>
     let parseHeader (header: seq<string>) = 
         let parseHeaderRaw accPS (line:string) = 
             match accPS with 
@@ -153,11 +144,9 @@ module Ply =
 
     let parsePLYFile fileName =
         let lines = readLines fileName
-        // At which index is the header located? The vertices? The faces?
         let bodyPos = lines |> Seq.findIndex(fun a -> a = "end_header")
         let header = lines |> Seq.take bodyPos
 
-        // Parse the header, the vertices & the faces.
         parseHeader header
         |> bind (fun resultHeaderPS -> 
                 let faces = lines |> Seq.skip (bodyPos + resultHeaderPS.VertexCount + 1) |> Seq.take  resultHeaderPS.FaceCount |> parseFaces

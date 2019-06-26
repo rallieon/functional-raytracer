@@ -1,9 +1,9 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
+namespace Illuminate.Interface
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
 open FSharp.Json
 open System.IO
-open Illuminate.Ply
+open Illuminate.Interface.Ply
 
 module SceneReader = 
     let readScene fileName =

@@ -1,7 +1,7 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Coordinate
+namespace Illuminate.Framework
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Framework.Coordinate
 open Illuminate.Shapes.Box
 open Illuminate.Shapes.Sphere
 open Illuminate.Shapes.Plane
@@ -21,7 +21,7 @@ module Intersection =
         | Some result -> result.t
         | None -> 100000000.
             
-    let getHitPoint ray origin scene =
+    let trace ray origin scene =
         let inter = intersect origin ray
         scene.shapes
             |> List.map inter

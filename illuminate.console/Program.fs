@@ -1,7 +1,7 @@
-﻿open Illuminate.Types
-open Illuminate.Render
-open Illuminate.SceneReader
-open Illuminate.SceneWriter
+﻿open Illuminate.Framework.Types
+open Illuminate.Framework.Render
+open Illuminate.Interface.SceneReader
+open Illuminate.Interface.SceneWriter
 
 [<EntryPoint>]
 let main argv =

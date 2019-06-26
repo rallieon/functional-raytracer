@@ -1,6 +1,6 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
+namespace Illuminate.Framework
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
 
 module Hit = 
     let calculateShadowPoint ray point normal = 

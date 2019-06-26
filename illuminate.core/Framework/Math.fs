@@ -1,6 +1,6 @@
-namespace Illuminate
+namespace Illuminate.Framework
 
-open Illuminate.Types
+open Illuminate.Framework.Types
 
 module Math = 
     let deg2rad angle =
@@ -79,25 +79,3 @@ module Math =
     
     let invertDirection dir =
         {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }
-    
-    let getTriangleNormal t =
-        match t.triangleNormal with
-            | Some n -> n
-            | None ->
-                let A = worldSubWorld t.v1 t.v0
-                let B = worldSubWorld t.v2 t.v0
-                cross A B
-    
-    let isInTriangle N point t =
-        let edge0 = worldSubWorld t.v1 t.v0
-        let pv0 = worldSubWorld point t.v0
-        let edge0Check = dot N (cross edge0 pv0)
-
-        let edge1 = worldSubWorld t.v2 t.v1
-        let pv1 = worldSubWorld point t.v1
-        let edge1Check = dot N (cross edge1 pv1)
-
-        let edge2 = worldSubWorld t.v0 t.v2
-        let pv2 = worldSubWorld point t.v2
-        let edge2Check = dot N (cross edge2 pv2)
-        (edge0Check < 0., edge1Check < 0., edge2Check < 0.)

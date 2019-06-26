@@ -1,8 +1,8 @@
 namespace Illuminate.Shapes
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Coordinate
-open Illuminate.Hit
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Framework.Coordinate
+open Illuminate.Framework.Hit
 
 module Plane = 
     let calculateHitPointPlane origin ray tnear plane =

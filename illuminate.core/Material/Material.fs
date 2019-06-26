@@ -1,7 +1,7 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Light
+namespace Illuminate.Material
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Lighting.Light
 
 module Material = 
     let getHitColor hitObj scene =

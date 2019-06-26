@@ -1,15 +1,15 @@
-namespace Illuminate
-open Illuminate.Types
-open Illuminate.Math
-open Illuminate.Material
-open Illuminate.Hit
-open Illuminate.Intersection
+namespace Illuminate.Framework
+open Illuminate.Framework.Types
+open Illuminate.Framework.Math
+open Illuminate.Material.Material
+open Illuminate.Framework.Hit
+open Illuminate.Framework.Intersection
 
 module Ray = 
     let castRay scene (ray,pixel)  =
         debug pixel scene
         
-        let hit = getHitPoint ray scene.camera scene
+        let hit = trace ray scene.camera scene
         let hitColor = 
             match hit with
                 | Some point -> getHitColor point scene
