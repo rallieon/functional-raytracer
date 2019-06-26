@@ -1,0 +1,53 @@
+{
+    "width": 640,
+    "height": 640,
+    "fov": 90,
+    "debug": true,
+    "debugi": 355,
+    "debugj": 285,
+    "shapes": [{
+        "TriangleMesh": {
+            "filePath": "./meta/models/pyramid.ply",
+            "triangles": [],
+            "color": {
+                "r": 255,
+                "g": 0,
+                "b": 0
+            }
+        }
+    }],
+    "lights": [{
+        "PointLight": {
+            "pointOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": -1
+            },
+            "luminosity": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+            },
+            "intensity": 0.5
+        }
+    }, {
+        "DistantLight": {
+            "distantLightDirection": {
+                "dirX": 0,
+                "dirY": 0,
+                "dirZ": -1
+            },
+            "luminosity": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+            },
+            "intensity": 0.0015
+        }
+    }],
+    "camera": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    }
+}
