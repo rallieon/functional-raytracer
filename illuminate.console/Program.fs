@@ -2,6 +2,7 @@
 open Illuminate.Framework.Render
 open Illuminate.Interface.SceneReader
 open Illuminate.Interface.SceneWriter
+open System.IO
 
 [<EntryPoint>]
 let main argv =
@@ -14,7 +15,7 @@ let main argv =
     let outputPath = 
         match argv.Length > 1 with
         | true -> argv.[1]
-        | false -> "meta\\images\\" + System.DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".jpeg"
+        | false -> Path.Combine("meta", "images", System.DateTime.Now.ToString("yyyy-MM-dd:HH-mm-ss") + ".jpeg")
 
     let scene = readScene inputPath
 
