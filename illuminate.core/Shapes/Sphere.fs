@@ -7,7 +7,7 @@ open FsAlg.Generic
 
 module Sphere = 
 
-    let calculateHitPointSphere (origin: WorldCoordinate, ray: Direction, tnear:float, sphere:Sphere) =
+    let calculateHitPointSphere origin ray tnear sphere =
         let point = calcHitPoint(origin, ray, tnear)
         let normal = point - sphere.origin |> Vector.unitVector
         let shadowOrigin = calculateShadowPoint(ray, point, normal)
@@ -22,6 +22,6 @@ module Sphere =
 
         match solQ, t0 < 0., t1 < 0. with
             | false, _, _ -> None
-            | true, false, _ -> Some(calculateHitPointSphere(origin, ray, t0, sphere))
-            | true, true, false -> Some(calculateHitPointSphere(origin, ray, t1, sphere))
+            | true, false, _ -> Some(calculateHitPointSphere origin ray t0 sphere)
+            | true, true, false -> Some(calculateHitPointSphere origin ray t1 sphere)
             | true, true, true -> None
