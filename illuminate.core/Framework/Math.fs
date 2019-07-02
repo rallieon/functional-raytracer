@@ -3,23 +3,6 @@ namespace Illuminate.Framework
 open Illuminate.Framework.Types
 
 module Math = 
-    let deg2rad angle =
-        System.Math.PI * angle / 180.0;
-    
-    let dot multiplier multiplicand = 
-        multiplier.x * multiplicand.x + multiplier.y * multiplicand.y + multiplier.z * multiplicand.z
-    
-    let cross multiplier multiplicand = 
-        {
-            x = (multiplier.y * multiplicand.z) - (multiplier.z * multiplicand.y);
-            y = (multiplier.z * multiplicand.x) - (multiplier.x * multiplicand.z);
-            z = (multiplier.x * multiplicand.y) - (multiplier.y * multiplicand.x);
-        }
-    
-    let inverseMag mag2 v = 
-        let invMag = 1. / sqrt mag2
-        {x = v.x * invMag; y = v.y * invMag; z = v.z * invMag}
-
     let calculateQ discr a b c = 
         let q =
             match b > 0. with
@@ -45,37 +28,3 @@ module Math =
             | true, _ -> (false, 0., 0.)
             | false, true -> (true, -0.5 * b / a, -0.5 * b / a)
             | false, false -> calculateQ discr a b c
-
-    let normalizeVector v = 
-        let mag2 = dot v v
-        match mag2 > 0. with
-            | true -> inverseMag mag2 v
-            | false -> v
-    
-    let convertCoordinateToDirection n =
-        {dirX = n.x; dirY = n.y; dirZ = n.z}
-    
-    let convertDirectionToCoordinate direction =
-        {x = direction.dirX; y = direction.dirY; z = direction.dirZ}
-    
-    let normalizeDirection d = 
-        d |> convertDirectionToCoordinate |> normalizeVector
-        
-    let normalizeWorld (worldCoordinate,pixel:ScreenCoordinate) = 
-        let length = sqrt (worldCoordinate.x * worldCoordinate.x + worldCoordinate.y * worldCoordinate.y + worldCoordinate.z * worldCoordinate.z)
-        {dirX = worldCoordinate.x / length; dirY = worldCoordinate.y / length; dirZ = worldCoordinate.z / length; }, pixel
-    
-    let worldSubWorld p o = 
-        {x = p.x - o.x; y = p.y - o.y; z = p.z - o.z}
-
-    let addVectorToPoint p v = 
-        {x = p.x + v.x; y = p.y + v.y; z = p.z + v.z}
-    
-    let subVectorFromPoint p v = 
-        {x = p.x - v.x; y = p.y - v.y; z = p.z - v.z}
-    
-    let multiplyVector v scale = 
-        {x = v.x * scale; y = v.y * scale; z = v.z * scale}
-    
-    let invertDirection dir =
-        {dirX = -dir.dirX; dirY = -dir.dirY; dirZ = -dir.dirZ }

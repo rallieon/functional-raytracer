@@ -21,6 +21,9 @@
     <Compile Include="Interface\SceneWriter.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FsAlg" Version="0.5.13">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
     <PackageReference Include="FSharp.Json" Version="0.3.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
   </ItemGroup>

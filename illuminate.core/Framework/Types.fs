@@ -1,12 +1,12 @@
 ﻿namespace Illuminate.Framework
+open FsAlg.Generic
 
 module Types = 
     (* Framework *)
-    type WorldCoordinate = {x: float; y: float; z: float}
-    type Direction =  {dirX: float; dirY: float; dirZ: float}
-    type Camera = WorldCoordinate
-    type Vector = WorldCoordinate
-    type Normal = WorldCoordinate
+    type WorldCoordinate = Vector<float>
+    type Direction = Vector<float>
+    type Camera = { cameraOrigin: WorldCoordinate }
+    type Normal = Vector<float>
     type Ray = {direction: Direction; origin: WorldCoordinate}
     type Color = { r: float; g: float; b: float }
     type ScreenCoordinate = { i: int; j: int; }
@@ -19,6 +19,8 @@ module Types =
     type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option}
     type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
     type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list}
+
+    [<ReferenceEquality>]
     type Shape = 
         | Sphere of Sphere
         | Plane of Plane

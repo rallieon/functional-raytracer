@@ -3,15 +3,16 @@ open Illuminate.Framework.Types
 open Illuminate.Framework.Math
 open Illuminate.Framework.Coordinate
 open Illuminate.Framework.Hit
+open FsAlg.Generic
 
 module Box = 
-    let getBoxTValues origin ray b =
-        let posXMin = (b.vMin.x - origin.x) / ray.dirX
-        let posXMax = (b.vMax.x - origin.x) / ray.dirX
-        let posYMin = (b.vMin.y - origin.y) / ray.dirY
-        let posYMax = (b.vMax.y - origin.y) / ray.dirY
-        let posZMin = (b.vMin.z - origin.z) / ray.dirZ
-        let posZMax = (b.vMax.z - origin.z) / ray.dirZ
+    let getBoxTValues (origin:WorldCoordinate, ray:Direction, b:Box) =
+        let posXMin = (b.vMin.[0] - origin.[0]) / ray.[0]
+        let posXMax = (b.vMax.[0] - origin.[0]) / ray.[0]
+        let posYMin = (b.vMin.[1] - origin.[1]) / ray.[1]
+        let posYMax = (b.vMax.[1] - origin.[1]) / ray.[1]
+        let posZMin = (b.vMin.[2] - origin.[2]) / ray.[2]
+        let posZMax = (b.vMax.[2] - origin.[2]) / ray.[2]
 
         ( 
         (if posXMin > posXMax then posXMax else posXMin),
@@ -22,24 +23,24 @@ module Box =
         (if posZMin < posZMax then posZMax else posZMin)
         )
 
-    let getBoxNormal b h =
-        let centerPoint = {x = (b.vMax.x - b.vMin.x) / 2.; y = (b.vMax.y - b.vMin.y) / 2.; z = (b.vMax.z - b.vMin.z) / 2.; }
-        let diff = worldSubWorld h centerPoint
-        let diffX = abs diff.x
-        let diffY = abs diff.y
-        let diffZ = abs diff.z
+    let getBoxNormal(b:Box, h:WorldCoordinate) =
+        let centerPoint = vector [(b.vMax.[0] - b.vMin.[0]) / 2.; (b.vMax.[1] - b.vMin.[1]) / 2.; (b.vMax.[2] - b.vMin.[2]) / 2.;]
+        let diff = h - centerPoint
+        let diffX = abs diff.[0]
+        let diffY = abs diff.[1]
+        let diffZ = abs diff.[2]
 
         //which ever side the hitpoint is closest to will be the normal needed.
         //this should for AABB, but will likely need to change when transformations are included
         match diffX > diffY && diffX > diffZ, diffY > diffX && diffY > diffZ, diffZ > diffX && diffZ > diffY with
-            | true, _, _ -> {x = 1.; y = 0.; z = 0.}
-            | false, true, _ -> {x = 0.; y = 1.; z = 0.}
-            | false, false, true -> {x = 0.; y = 0.; z = 1.}
-            | _-> {x = 0.; y = 0.; z = 1.}
+            | true, _, _ -> vector [1.; 0.; 0.]
+            | false, true, _ -> vector [0.; 1.; 0.]
+            | false, false, true -> vector [0.; 0.; 1.]
+            | _-> vector [0.; 0.; 1.]
 
 
     let intersectBox origin ray b = 
-        let txMin,txMax,tyMin,tyMax,tzMin,tzMax = getBoxTValues origin ray b
+        let txMin,txMax,tyMin,tyMax,tzMin,tzMax = getBoxTValues(origin, ray, b)
 
         match txMin > tyMax, tyMin > txMax with
             | true, _ -> None
@@ -54,7 +55,7 @@ module Box =
                     | false, false ->
                         let tMin = if tzMin > tSecondMin then tzMin else tSecondMin
                         let tMax = if tzMax < tSecondMax then tzMax else tSecondMax
-                        let h = (calcHitPoint origin ray tMin)
-                        let N = getBoxNormal b h
-                        let shadowPoint = calculateShadowPoint ray h N
+                        let h = (calcHitPoint(origin, ray, tMin))
+                        let N = getBoxNormal(b, h)
+                        let shadowPoint = calculateShadowPoint(ray, h, N)
                         Some({shape = Box b; t = tMin; point = h; normal = N; shadowOrigin = shadowPoint})

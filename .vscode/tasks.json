@@ -24,7 +24,7 @@
         }
     }, {
         "label": "run",
-        "command": "dotnet run --project illuminate.console -- ./meta/scenes/main.json",
+        "command": "dotnet run --project illuminate.console",
         "type": "shell",
         "presentation": {
             "reveal": "always"

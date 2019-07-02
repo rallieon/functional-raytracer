@@ -9,7 +9,6 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/illuminate.console/bin/Debug/netcoreapp2.2/illuminate.console.dll",
-            "args": ["./meta/scenes/main.json"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "internalConsole"
