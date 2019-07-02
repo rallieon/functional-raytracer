@@ -8,19 +8,13 @@
     "shapes": [{
         "Triangle": {
             "v0": {
-                "x": 0,
-                "y": 0,
-                "z": -4
+                "Vector": [0, 0, -4]
             },
             "v1": {
-                "x": 2,
-                "y": 0,
-                "z": -4
+                "Vector": [2, 0, -4]
             },
             "v2": {
-                "x": 0,
-                "y": 2,
-                "z": -4
+                "Vector": [0, 2, -4]
             },
             "color": {
                 "r": 0,
@@ -31,14 +25,10 @@
     }, {
         "Plane": {
             "planePoint": {
-                "x": 0,
-                "y": -1,
-                "z": -4
+                "Vector": [0, -1, -4]
             },
             "planeNormal": {
-                "x": 0,
-                "y": 1,
-                "z": 0
+                "Vector": [0, 1, 0]
             },
             "color": {
                 "r": 0,
@@ -49,9 +39,7 @@
     }, {
         "Sphere": {
             "origin": {
-                "x": 4,
-                "y": 0,
-                "z": -5
+                "Vector": [4, 0, -5]
             },
             "radius": 1,
             "color": {
@@ -63,9 +51,7 @@
     }, {
         "Sphere": {
             "origin": {
-                "x": -4,
-                "y": 0,
-                "z": -5
+                "Vector": [-4, 0, -5]
             },
             "radius": 1,
             "color": {
@@ -78,9 +64,7 @@
     "lights": [{
         "PointLight": {
             "pointOrigin": {
-                "x": -2,
-                "y": 6,
-                "z": -5
+                "Vector": [-2, 6, -5]
             },
             "luminosity": {
                 "r": 255,
@@ -92,9 +76,7 @@
     }, {
         "DistantLight": {
             "distantLightDirection": {
-                "dirX": 0,
-                "dirY": 0,
-                "dirZ": -1
+                "Vector": [0, 0, -1]
             },
             "luminosity": {
                 "r": 255,
@@ -105,8 +87,8 @@
         }
     }],
     "camera": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "cameraOrigin": {
+            "Vector": [0, 0, 0]
+        }
     }
 }

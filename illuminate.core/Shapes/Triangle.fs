@@ -4,28 +4,29 @@ open Illuminate.Framework.Math
 open Illuminate.Framework.Coordinate
 open Illuminate.Shapes.Plane
 open Illuminate.Framework.Hit
+open FsAlg.Generic
 
 module Triangle = 
     let getTriangleNormal t =
         match t.triangleNormal with
             | Some n -> n
             | None ->
-                let A = worldSubWorld t.v1 t.v0
-                let B = worldSubWorld t.v2 t.v0
-                cross A B
+                let A = t.v1 - t.v0
+                let B = t.v2 - t.v0
+                A %* B
     
     let isInTriangle N point t =
-        let edge0 = worldSubWorld t.v1 t.v0
-        let pv0 = worldSubWorld point t.v0
-        let edge0Check = dot N (cross edge0 pv0)
+        let edge0 = t.v1 - t.v0
+        let pv0 = point - t.v0
+        let edge0Check = N * (edge0 %* pv0)
 
-        let edge1 = worldSubWorld t.v2 t.v1
-        let pv1 = worldSubWorld point t.v1
-        let edge1Check = dot N (cross edge1 pv1)
+        let edge1 = t.v2 - t.v1
+        let pv1 = point - t.v1
+        let edge1Check = N * (edge1 %* pv1)
 
-        let edge2 = worldSubWorld t.v0 t.v2
-        let pv2 = worldSubWorld point t.v2
-        let edge2Check = dot N (cross edge2 pv2)
+        let edge2 = t.v0 - t.v2
+        let pv2 = point - t.v2
+        let edge2Check = N * (edge2 %* pv2)
         (edge0Check < 0., edge1Check < 0., edge2Check < 0.)
         
     let intersectTriangle origin ray t =

@@ -5,8 +5,13 @@ open Illuminate.Framework.Coordinate
 open Illuminate.Framework.Intersection
 open Illuminate.Lighting.Light
 open Illuminate.Framework.Ray
+open FsAlg.Generic
 
 module Render = 
+    let normalizeWorld (worldCoordinate:WorldCoordinate,pixel:ScreenCoordinate) = 
+        let length = sqrt (worldCoordinate.[0] * worldCoordinate.[0] + worldCoordinate.[1] * worldCoordinate.[1] + worldCoordinate.[2] * worldCoordinate.[2])
+        (worldCoordinate / length), pixel
+    
     let initPixels scene = 
         let convertIdx idx =
             { coordinate = (calculateScreenCoordinateFromIndex idx scene.width); pixelColor = {r = 0.; g = 0.; b = 0.} }

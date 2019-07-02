@@ -4,15 +4,16 @@ open Illuminate.Framework.Math
 open Illuminate.Framework.Coordinate
 open Illuminate.Framework.Intersection
 open Illuminate.Framework.Hit
+open FsAlg.Generic
 
 module Light = 
     let calculateColorIntensity color luminosity = 
         {r = color.r * luminosity; g = color.g * luminosity; b = color.b * luminosity}
         
     let calculateHDotL lightDirection hitObj = 
-        let hitVector = hitObj.normal |> normalizeVector
-        let inverseDirection = lightDirection |> invertDirection |> convertDirectionToCoordinate
-        let value = dot hitVector inverseDirection
+        let hitVector = hitObj.normal |> Vector.unitVector
+        let inverseDirection = -lightDirection
+        let value = hitVector * inverseDirection
         max 0. value
 
     let illuminateDistantLight light hitObj = 
@@ -25,15 +26,15 @@ module Light =
     
     let illuminateSpotLight (light:SpotLight, hitObj:HitPoint) = 
         //TODO implement actual spotlight code
-        {lightDistance = 0.; lightDirection = {dirX = 0.; dirY = 0.; dirZ = 0.}; luminosity = {r = 0.; b = 0.; g = 0.} }
+        {lightDistance = 0.; lightDirection = vector [0.; 0.; 0.]; luminosity = {r = 0.; b = 0.; g = 0.} }
     
     let illuminatePointLight light hitObj = 
-        let lightVector = worldSubWorld hitObj.point light.pointOrigin
-        let r2 = dot lightVector lightVector
+        let lightVector = hitObj.point - light.pointOrigin
+        let r2 = lightVector * lightVector
         let distance = sqrt r2
 
         //normalize the light direction based on distance
-        let normalLightDir = {dirX = lightVector.x / distance; dirY = lightVector.y / distance; dirZ = lightVector.z / distance}
+        let normalLightDir = vector [lightVector.[0] / distance; lightVector.[1] / distance; lightVector.[2] / distance]
 
         //get initial luminosity
         let luminosity = calculateColorIntensity light.luminosity light.intensity
@@ -55,7 +56,7 @@ module Light =
             | DistantLight dl -> illuminateDistantLight dl hitObj
             | SpotLight sl -> illuminateSpotLight (sl, hitObj)
 
-        let invertedDirection = invertDirection lightHit.lightDirection
+        let invertedDirection = -lightHit.lightDirection
         
         //use the shadow origin to avoid shadow acne
         let inShadow = trace invertedDirection hitObj.shadowOrigin scene

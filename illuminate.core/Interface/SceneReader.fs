@@ -4,6 +4,7 @@ open Illuminate.Framework.Math
 open FSharp.Json
 open System.IO
 open Illuminate.Interface.Ply
+open FsAlg.Generic
 
 module SceneReader = 
     let readScene fileName =
@@ -18,13 +19,13 @@ module SceneReader =
                 match n0x = 0., n0y = 0., n0z = 0. with
                     | true, true, true -> None
                     | _ -> 
-                        let unnormalized = {x = (n0x + n1y + n2z) / 3.; y = (n0y + n1y + n1y) / 3.; z = (n0z + n1z + n2z) / 3. }
-                        Some(normalizeVector unnormalized)
+                        let unnormalized = vector [(n0x + n1y + n2z) / 3.; (n0y + n1y + n1y) / 3.; (n0z + n1z + n2z) / 3. ]
+                        Some(unnormalized |> Vector.unitVector)
 
             Triangle {
-                v0 = {x = v0x; y = v0y; z = v0z}; 
-                v1 = {x = v1x; y = v1y; z = v1z}; 
-                v2 = {x = v2x; y = v2y; z = v2z}; 
+                v0 = vector [v0x; v0y; v0z]; 
+                v1 = vector [v1x; v1y; v1z]; 
+                v2 = vector [v2x; v2y; v2z]; 
                 color = tm.color;
                 triangleNormal = N
             }
