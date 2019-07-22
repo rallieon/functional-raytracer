@@ -1,51 +1,32 @@
 {
     "width": 640,
-    "height": 480,
+    "height": 640,
     "fov": 90,
-    "debug": false,
-    "debugi": 430,
-    "debugj": 200,
+    "debug": true,
+    "debugi": 355,
+    "debugj": 285,
     "shapes": [{
-        "Plane": {
-            "planePoint": {
-                "Vector": [0, -1, -4]
-            },
-            "planeNormal": {
-                "Vector": [0, 1, 0]
-            },
+        "TriangleMesh": {
+            "filePath": "./meta/models/pyramid.ply",
+            "triangles": [],
             "color": {
-                "r": 0,
+                "r": 255,
                 "g": 0,
-                "b": 255
-            }
-        }
-    }, {
-        "Sphere": {
-            "origin": {
-                "Vector": [4, 0, -5]
-            },
-            "radius": 1,
-            "color": {
-                "r": 0,
-                "g": 0,
-                "b": 255
-            },
-            "transformation": {
-                "value": "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1"
+                "b": 0
             }
         }
     }],
     "lights": [{
         "PointLight": {
             "pointOrigin": {
-                "Vector": [-2, 6, -5]
+                "Vector": [0, 0, -1]
             },
             "luminosity": {
                 "r": 255,
                 "g": 255,
                 "b": 255
             },
-            "intensity": 1
+            "intensity": 0.5
         }
     }, {
         "DistantLight": {

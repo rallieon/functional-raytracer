@@ -27,7 +27,8 @@ module SceneReader =
                 v1 = vector [v1x; v1y; v1z]; 
                 v2 = vector [v2x; v2y; v2z]; 
                 color = tm.color;
-                triangleNormal = N
+                triangleNormal = N;
+                transformation = None
             }
             
         let addTriangles tm result =
@@ -39,7 +40,7 @@ module SceneReader =
             let tm = 
                 match shape with 
                 | TriangleMesh m -> m
-                | _ -> {filePath = ""; triangles = list.Empty; color = {r = 0.; g = 0.; b = 0.}}
+                | _ -> {filePath = ""; triangles = list.Empty; color = {r = 0.; g = 0.; b = 0.}; transformation = None}
 
             let parsedFile = parsePLYFile tm.filePath
 

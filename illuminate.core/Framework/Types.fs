@@ -1,5 +1,12 @@
 ﻿namespace Illuminate.Framework
 open FsAlg.Generic
+open FSharp.Json
+
+type TransformationTransform() =
+    interface ITypeTransform with
+        member x.targetType () = (fun _ -> typeof<string>) ()
+        member x.toTargetType value = (fun (v: obj) -> Matrix.toVector( (v:?> Matrix<float>) ).ToArray() |> Array.map string |> String.concat ", " :> obj) value
+        member x.fromTargetType value = (fun (v: obj) -> (v :?> string).Split(',') |> Array.map float |> Vector.ofArray |> Matrix.ofVector 4 :> obj) value
 
 module Types = 
     (* Framework *)
@@ -12,13 +19,17 @@ module Types =
     type ScreenCoordinate = { i: int; j: int; }
     type Pixel = { coordinate: ScreenCoordinate; pixelColor: Color }
     type Image = Pixel list
+    type Transformation = {
+        [<JsonField(Transform=typeof<TransformationTransform>)>]
+        value: Matrix<float>
+    }
 
     (* Shapes *)
-    type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
-    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
-    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option}
-    type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
-    type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list}
+    type Sphere = {origin: WorldCoordinate; radius: float; color: Color; transformation: Transformation option}
+    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color; transformation: Transformation option}
+    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option; transformation: Transformation option}
+    type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color; transformation: Transformation option}
+    type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list; transformation: Transformation option}
 
     [<ReferenceEquality>]
     type Shape = 
