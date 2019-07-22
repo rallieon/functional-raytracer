@@ -22,14 +22,27 @@ module SceneReader =
                         let unnormalized = vector [(n0x + n1y + n2z) / 3.; (n0y + n1y + n1y) / 3.; (n0z + n1z + n2z) / 3. ]
                         Some(unnormalized |> Vector.unitVector)
 
-            Triangle {
+            let result = {
                 v0 = vector [v0x; v0y; v0z]; 
                 v1 = vector [v1x; v1y; v1z]; 
                 v2 = vector [v2x; v2y; v2z]; 
                 color = tm.color;
                 triangleNormal = N;
-                transformation = None
+                transformation = tm.transformation
             }
+
+            //TODO Comment
+            match result.transformation with
+                | None -> Triangle result
+                | Some trans ->
+                    Triangle {
+                        v0 = (trans.value * (Vector.toArray result.v0 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
+                        v1 = (trans.value * (Vector.toArray result.v1 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
+                        v2 = (trans.value * (Vector.toArray result.v2 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
+                        color = result.color;
+                        triangleNormal = result.triangleNormal;
+                        transformation = result.transformation
+                    }
             
         let addTriangles tm result =
             let face = addFace tm result

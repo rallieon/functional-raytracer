@@ -2,6 +2,7 @@
 open FsAlg.Generic
 open FSharp.Json
 
+//TODO Comment this
 type TransformationTransform() =
     interface ITypeTransform with
         member x.targetType () = (fun _ -> typeof<string>) ()
@@ -25,8 +26,8 @@ module Types =
     }
 
     (* Shapes *)
-    type Sphere = {origin: WorldCoordinate; radius: float; color: Color; transformation: Transformation option}
-    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color; transformation: Transformation option}
+    type Sphere = {origin: WorldCoordinate; radius: float; color: Color;}
+    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color;}
     type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option; transformation: Transformation option}
     type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color; transformation: Transformation option}
     type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list; transformation: Transformation option}

@@ -31,7 +31,7 @@ module Triangle =
         
     let intersectTriangle origin ray t =
         let N = getTriangleNormal t
-        let plane = {planePoint = t.v0; planeNormal = N; color = t.color; transformation = None}
+        let plane = {planePoint = t.v0; planeNormal = N; color = t.color}
 
         //check and see if it hits the plane of the triangle
         let hitsPlane = intersectPlane origin ray plane
