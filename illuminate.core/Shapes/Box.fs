@@ -14,6 +14,7 @@ module Box =
         let posZMin = (b.vMin.[2] - origin.[2]) / ray.[2]
         let posZMax = (b.vMax.[2] - origin.[2]) / ray.[2]
 
+        //TODO refactor, looks ugly
         ( 
         (if posXMin > posXMax then posXMax else posXMin),
         (if posXMin < posXMax then posXMax else posXMin),
