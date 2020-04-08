@@ -12,15 +12,6 @@
         },
         "presentation": {
             "reveal": "always"
-        },
-        "problemMatcher": "$msCompile",
-        "options": {
-            "shell": {
-                "executable": "cmd.exe",
-                "args": [
-                    "/d", "/c"
-                ]
-            }
         }
     }, {
         "label": "test",
@@ -32,15 +23,6 @@
         },
         "presentation": {
             "reveal": "always"
-        },
-        "problemMatcher": "$msCompile",
-        "options": {
-            "shell": {
-                "executable": "cmd.exe",
-                "args": [
-                    "/d", "/c"
-                ]
-            }
         }
     }, {
         "label": "run",
@@ -48,15 +30,6 @@
         "type": "shell",
         "presentation": {
             "reveal": "always"
-        },
-        "problemMatcher": "$msCompile",
-        "options": {
-            "shell": {
-                "executable": "cmd.exe",
-                "args": [
-                    "/d", "/c"
-                ]
-            }
         }
     }]
 }
