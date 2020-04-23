@@ -31,14 +31,30 @@ module SceneReader =
                 transformation = tm.transformation
             }
 
+            //adds data needed for vector to be multiplied by 4x4 translation matrix
+            //exteremely important that arr comes before [|1|]
+            //https://www.euclideanspace.com/maths/geometry/affine/matrix4x4/index.htm
+            let addFourthDimension v =
+                let arr = Vector.toArray v
+                let arrWith1 = Array.append arr [|1.|]
+                let vec = Vector.ofArray arrWith1
+                vec
+
+            //transform the vector by the translation matrix
+            //have to convert vector to 4th dimension first
+            let transformVector trans v = 
+                let vWithFourth = addFourthDimension v
+                let transformedV = trans.value * vWithFourth
+                transformedV.[..2]
+
             //TODO Comment
             match result.transformation with
                 | None -> Triangle result
                 | Some trans ->
                     Triangle {
-                        v0 = (trans.value * (Vector.toArray result.v0 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
-                        v1 = (trans.value * (Vector.toArray result.v1 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
-                        v2 = (trans.value * (Vector.toArray result.v2 |> Array.append [|1.|] |> Vector.ofArray)).[..2]
+                        v0 = transformVector trans result.v0
+                        v1 = transformVector trans result.v1
+                        v2 = transformVector trans result.v2
                         color = result.color;
                         triangleNormal = result.triangleNormal;
                         transformation = result.transformation
