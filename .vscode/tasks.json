@@ -25,27 +25,6 @@
             "reveal": "always"
         }
     }, {
-        "label": "test",
-        "command": "dotnet test",
-        "type": "shell",
-        "group": {
-            "kind": "test",
-            "isDefault": true
-        },
-        "presentation": {
-            "reveal": "always"
-        },
-        "problemMatcher": "$msCompile",
-        "options": {
-            "shell": {
-                "executable": "cmd.exe",
-                "args": [
-                    "/d",
-                    "/c"
-                ]
-            }
-        }
-    }, {
         "label": "run",
         "command": "dotnet run --project illuminate.console -- ./meta/scenes/main.json",
         "type": "shell",
