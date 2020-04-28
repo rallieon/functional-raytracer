@@ -8,6 +8,7 @@ open FsAlg.Generic
 
 module SceneReader = 
     let readScene fileName =
+        (*for each face in the scene add a triangle to the shape list*)
         let addFace tm result face =
             let face0, face1, face2 = face
             let listVert = Seq.toList result.Vertices
@@ -44,7 +45,8 @@ module SceneReader =
             //have to convert vector to 4th dimension first
             let transformVector trans v = 
                 let vWithFourth = addFourthDimension v
-                let transformedV = trans.value * vWithFourth
+                let transformedMatrix = calculateTransformationMatrix(trans)
+                let transformedV = transformedMatrix * vWithFourth
                 transformedV.[..2]
 
             //TODO Comment
@@ -59,7 +61,7 @@ module SceneReader =
                         triangleNormal = result.triangleNormal;
                         transformation = result.transformation
                     }
-            
+
         let addTriangles tm result =
             let face = addFace tm result
             let faces = Seq.toList result.Faces

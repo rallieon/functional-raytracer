@@ -1,8 +1,50 @@
 namespace Illuminate.Framework
 
+open FsAlg.Generic
 open Illuminate.Framework.Types
 
 module Math = 
+    let calculateTransformationMatrix trans =
+        let translationMatrix = 
+            match trans.translate with
+                | None -> identityMatrix
+                | Some translate -> matrix[[1.; 0.; 0.; translate.x];
+                                       [0.; 1.; 0.; translate.y];
+                                       [0.; 0.; 1.; translate.z];
+                                       [0.; 0.; 0.; 1.]]
+        let scaleMatrix = 
+            match trans.scale with
+                | None -> identityMatrix
+                | Some scale -> matrix[[scale.x; 0.; 0.; 0.];
+                                       [0.; scale.y; 0.; 0.];
+                                       [0.; 0.; scale.z; 0.];
+                                       [0.; 0.; 0.; 1.]]
+
+        let rotationXMatrix = 
+            match trans.rotation with
+                | None -> identityMatrix
+                | Some rotation -> matrix[[1.; 0.; 0.; 0.];
+                                       [0.; cos(rotation.xDegrees); sin(rotation.xDegrees); 0.];
+                                       [0.; -sin(rotation.xDegrees); cos(rotation.xDegrees); 0.];
+                                       [0.; 0.; 0.; 1.]]
+        let rotationYMatrix = 
+            match trans.rotation with
+                | None -> identityMatrix
+                | Some rotation -> matrix[[cos(rotation.yDegrees); 0.; -sin(rotation.yDegrees); 0.];
+                                       [0.; 1.; 0.; 0.];
+                                       [sin(rotation.yDegrees); 0.; cos(rotation.yDegrees); 0.];
+                                       [0.; 0.; 0.; 1.]]
+        let rotationZMatrix = 
+            match trans.rotation with
+                | None -> identityMatrix
+                | Some rotation -> matrix[[cos(rotation.zDegrees); -sin(rotation.zDegrees); 0.; 0.];
+                                       [sin(rotation.zDegrees); cos(rotation.zDegrees); 0.; 0.];
+                                       [0.; 0.; 1.; 0.];
+                                       [0.; 0.; 0.; 1.]]
+
+        translationMatrix * scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix
+
+
     let calculateQ discr a b c = 
         let q =
             match b > 0. with
