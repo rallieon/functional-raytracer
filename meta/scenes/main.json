@@ -22,9 +22,14 @@
                         "z": 0
                     },
                     "scale": {
-                        "x": 2,
-                        "y": 2,
+                        "x": 1,
+                        "y": 1,
                         "z": 1
+                    },
+                    "rotation": {
+                        "xDegrees": 0,
+                        "yDegrees": 0.25,
+                        "zDegrees": 0
                     }
                 }
             }

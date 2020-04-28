@@ -24,15 +24,15 @@ module Math =
             match trans.rotation with
                 | None -> identityMatrix
                 | Some rotation -> matrix[[1.; 0.; 0.; 0.];
-                                       [0.; cos(rotation.xDegrees); sin(rotation.xDegrees); 0.];
-                                       [0.; -sin(rotation.xDegrees); cos(rotation.xDegrees); 0.];
+                                       [0.; cos(rotation.xDegrees); -sin(rotation.xDegrees); 0.];
+                                       [0.; sin(rotation.xDegrees); cos(rotation.xDegrees); 0.];
                                        [0.; 0.; 0.; 1.]]
         let rotationYMatrix = 
             match trans.rotation with
                 | None -> identityMatrix
-                | Some rotation -> matrix[[cos(rotation.yDegrees); 0.; -sin(rotation.yDegrees); 0.];
+                | Some rotation -> matrix[[cos(rotation.yDegrees); 0.; sin(rotation.yDegrees); 0.];
                                        [0.; 1.; 0.; 0.];
-                                       [sin(rotation.yDegrees); 0.; cos(rotation.yDegrees); 0.];
+                                       [-sin(rotation.yDegrees); 0.; cos(rotation.yDegrees); 0.];
                                        [0.; 0.; 0.; 1.]]
         let rotationZMatrix = 
             match trans.rotation with
