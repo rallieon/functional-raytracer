@@ -8,7 +8,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/illuminate.console/bin/Debug/netcoreapp3.1/illuminate.console.dll",
+            "program": "${workspaceFolder}/illuminate.console/bin/Debug/net5.0/illuminate.console.dll",
             "args": ["./meta/scenes/main.json"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
