@@ -5,45 +5,96 @@
     "debug": true,
     "debugi": 355,
     "debugj": 285,
-    "shapes": [{
-        "TriangleMesh": {
-            "filePath": "./meta/models/pyramid.ply",
-            "triangles": [],
-            "color": {
-                "r": 255,
-                "g": 0,
-                "b": 0
+    "shapes": [
+        {
+            "TriangleMesh": {
+                "filePath": "./meta/models/pyramid.ply",
+                "triangles": [],
+                "color": {
+                    "r": 255,
+                    "g": 0,
+                    "b": 0
+                },
+                "transformation": {
+                    "translate": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1,
+                        "z": 1
+                    },
+                    "rotation": {
+                        "xDegrees": 0,
+                        "yDegrees": 0.25,
+                        "zDegrees": 0
+                    }
+                }
+            }
+        },
+        {
+            "Sphere": {
+                "origin": {
+                    "Vector": [
+                        -2,
+                        0,
+                        -3
+                    ]
+                },
+                "radius": 0.5,
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 255
+                }
             }
         }
-    }],
-    "lights": [{
-        "PointLight": {
-            "pointOrigin": {
-                "Vector": [0, 0, -1]
-            },
-            "luminosity": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-            },
-            "intensity": 0.5
+    ],
+    "lights": [
+        {
+            "PointLight": {
+                "pointOrigin": {
+                    "Vector": [
+                        0,
+                        0,
+                        -1
+                    ]
+                },
+                "luminosity": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                },
+                "intensity": 0.5
+            }
+        },
+        {
+            "DistantLight": {
+                "distantLightDirection": {
+                    "Vector": [
+                        0,
+                        0,
+                        -1
+                    ]
+                },
+                "luminosity": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                },
+                "intensity": 0.0015
+            }
         }
-    }, {
-        "DistantLight": {
-            "distantLightDirection": {
-                "Vector": [0, 0, -1]
-            },
-            "luminosity": {
-                "r": 255,
-                "g": 255,
-                "b": 255
-            },
-            "intensity": 0.0015
-        }
-    }],
+    ],
     "camera": {
         "cameraOrigin": {
-            "Vector": [0, 0, 0]
+            "Vector": [
+                0,
+                0,
+                0
+            ]
         }
     }
 }

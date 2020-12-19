@@ -8,6 +8,7 @@ open FsAlg.Generic
 
 module SceneReader = 
     let readScene fileName =
+        (*for each face in the scene add a triangle to the shape list*)
         let addFace tm result face =
             let face0, face1, face2 = face
             let listVert = Seq.toList result.Vertices
@@ -22,14 +23,45 @@ module SceneReader =
                         let unnormalized = vector [(n0x + n1y + n2z) / 3.; (n0y + n1y + n1y) / 3.; (n0z + n1z + n2z) / 3. ]
                         Some(unnormalized |> Vector.unitVector)
 
-            Triangle {
+            let result = {
                 v0 = vector [v0x; v0y; v0z]; 
                 v1 = vector [v1x; v1y; v1z]; 
                 v2 = vector [v2x; v2y; v2z]; 
                 color = tm.color;
-                triangleNormal = N
+                triangleNormal = N;
+                transformation = tm.transformation
             }
-            
+
+            //adds data needed for vector to be multiplied by 4x4 translation matrix
+            //exteremely important that arr comes before [|1|]
+            //https://www.euclideanspace.com/maths/geometry/affine/matrix4x4/index.htm
+            let addFourthDimension v =
+                let arr = Vector.toArray v
+                let arrWith1 = Array.append arr [|1.|]
+                let vec = Vector.ofArray arrWith1
+                vec
+
+            //transform the vector by the translation matrix
+            //have to convert vector to 4th dimension first
+            let transformVector trans v = 
+                let vWithFourth = addFourthDimension v
+                let transformedMatrix = calculateTransformationMatrix(trans)
+                let transformedV = transformedMatrix * vWithFourth
+                transformedV.[..2]
+
+            //TODO Comment
+            match result.transformation with
+                | None -> Triangle result
+                | Some trans ->
+                    Triangle {
+                        v0 = transformVector trans result.v0
+                        v1 = transformVector trans result.v1
+                        v2 = transformVector trans result.v2
+                        color = result.color;
+                        triangleNormal = result.triangleNormal;
+                        transformation = result.transformation
+                    }
+
         let addTriangles tm result =
             let face = addFace tm result
             let faces = Seq.toList result.Faces
@@ -39,7 +71,7 @@ module SceneReader =
             let tm = 
                 match shape with 
                 | TriangleMesh m -> m
-                | _ -> {filePath = ""; triangles = list.Empty; color = {r = 0.; g = 0.; b = 0.}}
+                | _ -> {filePath = ""; triangles = list.Empty; color = {r = 0.; g = 0.; b = 0.}; transformation = None}
 
             let parsedFile = parsePLYFile tm.filePath
 

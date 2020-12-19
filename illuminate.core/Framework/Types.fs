@@ -1,5 +1,6 @@
 ﻿namespace Illuminate.Framework
 open FsAlg.Generic
+open FSharp.Json
 
 module Types = 
     (* Framework *)
@@ -12,13 +13,25 @@ module Types =
     type ScreenCoordinate = { i: int; j: int; }
     type Pixel = { coordinate: ScreenCoordinate; pixelColor: Color }
     type Image = Pixel list
+    
+    (*Transformations*)
+    type TranslationTransformation = {x: float; y: float; z: float}
+    type ScaleTransformation = {x: float; y: float; z: float}
+    type RotationTransformation = {xDegrees: float; yDegrees: float; zDegrees: float}
+    type Transformation = {translate: TranslationTransformation option; 
+        scale: ScaleTransformation option; rotation: RotationTransformation option}
 
     (* Shapes *)
-    type Sphere = {origin: WorldCoordinate; radius: float; color: Color}
-    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color}
-    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; triangleNormal: WorldCoordinate option}
-    type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color}
-    type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list}
+    type Sphere = {origin: WorldCoordinate; radius: float; color: Color;
+        transformation: Transformation option}
+    type Plane = {planePoint: WorldCoordinate; planeNormal: Normal; color: Color;
+        transformation: Transformation option}
+    type Triangle = {v0: WorldCoordinate; v1: WorldCoordinate; v2: WorldCoordinate; color: Color; 
+        triangleNormal: WorldCoordinate option; transformation: Transformation option}
+    type Box = {vMin: WorldCoordinate; vMax: WorldCoordinate; color:  Color; 
+        transformation: Transformation option}
+    type TriangleMesh = {filePath: string; color:  Color; triangles: Triangle list; 
+        transformation: Transformation option}
 
     [<ReferenceEquality>]
     type Shape = 
@@ -51,6 +64,8 @@ module Types =
 
     [<Literal>]
     let bias = 0.0001
+
+    let identityMatrix = matrix [[1.; 0.; 0.; 0.]; [0.; 1.; 0.; 0.]; [0.; 0.; 1.; 0.]; [0.; 0.; 0.; 1.]]
 
     let debug pixel scene =
         let checkVal i j =
