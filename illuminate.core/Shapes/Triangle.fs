@@ -1,4 +1,5 @@
 namespace Illuminate.Shapes
+
 open Illuminate.Framework.Types
 open Illuminate.Framework.Math
 open Illuminate.Framework.Coordinate
@@ -6,15 +7,15 @@ open Illuminate.Shapes.Plane
 open Illuminate.Framework.Hit
 open FsAlg.Generic
 
-module Triangle = 
+module Triangle =
     let getTriangleNormal t =
         match t.triangleNormal with
-            | Some n -> n
-            | None ->
-                let A = t.v1 - t.v0
-                let B = t.v2 - t.v0
-                A %* B
-    
+        | Some n -> n
+        | None ->
+            let A = t.v1 - t.v0
+            let B = t.v2 - t.v0
+            A %* B
+
     let isInTriangle N point t =
         let edge0 = t.v1 - t.v0
         let pv0 = point - t.v0
@@ -28,19 +29,32 @@ module Triangle =
         let pv2 = point - t.v2
         let edge2Check = N * (edge2 %* pv2)
         (edge0Check < 0., edge1Check < 0., edge2Check < 0.)
-        
+
     let intersectTriangle origin ray t =
         let N = getTriangleNormal t
-        let plane = {planePoint = t.v0; planeNormal = N; color = t.color; transformation = None}
+
+        let plane =
+            { planePoint = t.v0
+              planeNormal = N
+              color = t.color
+              transformations = Some List.empty }
 
         //check and see if it hits the plane of the triangle
         let hitsPlane = intersectPlane origin ray plane
+
         match hitsPlane with
-            | None -> None
-            | Some hit ->
-                //now that we have determined it hit the plane then check if the hitpoint is inside the triangle
-                match isInTriangle N hit.point t with
-                    | true, _, _ -> None
-                    | false, true, _ -> None
-                    | false, false, true -> None
-                    | false, false, false -> Some({shape = Triangle t; t = hit.t; point = hit.point; normal = N; shadowOrigin = hit.shadowOrigin})
+        | None -> None
+        | Some hit ->
+            //now that we have determined it hit the plane then check if the hitpoint is inside the triangle
+            match isInTriangle N hit.point t with
+            | true, _, _ -> None
+            | false, true, _ -> None
+            | false, false, true -> None
+            | false, false, false ->
+                Some(
+                    { shape = Triangle t
+                      t = hit.t
+                      point = hit.point
+                      normal = N
+                      shadowOrigin = hit.shadowOrigin }
+                )

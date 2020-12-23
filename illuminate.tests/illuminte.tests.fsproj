@@ -10,6 +10,7 @@
     <Compile Include="CoordinateTests.fs" />
     <Compile Include="MathTests.fs" />
     <Compile Include="IntegrationTests.fs" />
+    <Compile Include="TransformationTests.fs" />
   </ItemGroup>
 
   <ItemGroup>
