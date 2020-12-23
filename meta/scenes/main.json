@@ -17,22 +17,22 @@
         },
         "transformations": [
           {
+            "Scale": {
+              "x": 1.5,
+              "y": 1.5,
+              "z": 1.5
+            }
+          },
+          {
             "Translation": {
               "x": 0,
               "y": 0,
-              "z": 0
+              "z": 1
             }
           },
           {
-            "Scale": {
-              "x": 2,
-              "y": 2,
-              "z": 2
-            }
-          },
-          {
-            "RotateX": {
-              "radians": 0
+            "RotateY": {
+              "radians": 0.785
             }
           }
         ]
