@@ -44,6 +44,22 @@ module Math =
 
         translationMatrix * scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix
 
+    //adds data needed for vector to be multiplied by 4x4 translation matrix
+    //exteremely important that arr comes before [|1|]
+    //https://www.euclideanspace.com/maths/geometry/affine/matrix4x4/index.htm
+    let addFourthDimension v =
+        let arr = Vector.toArray v
+        let arrWith1 = Array.append arr [|1.|]
+        let vec = Vector.ofArray arrWith1
+        vec
+
+    //transform the vector by the translation matrix
+    //have to convert vector to 4th dimension first
+    let transformVector trans v = 
+        let vWithFourth = addFourthDimension v
+        let transformedMatrix = calculateTransformationMatrix(trans)
+        let transformedV = transformedMatrix * vWithFourth
+        transformedV.[..2]
 
     let calculateQ discr a b c = 
         let q =
