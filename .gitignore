@@ -6,3 +6,5 @@ images/
 .DS_Store
 .ionide/
 .fake
+.idea/
+*.user
