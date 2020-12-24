@@ -8,7 +8,7 @@
   "shapes": [
     {
       "TriangleMesh": {
-        "filePath": "./meta/models/pyramid.ply",
+        "filePath": "./meta/models/bunny.ply",
         "triangles": [],
         "color": {
           "r": 255,
@@ -18,21 +18,16 @@
         "transformations": [
           {
             "Scale": {
-              "x": 1.5,
-              "y": 1.5,
-              "z": 1.5
+              "x": 10,
+              "y": 10,
+              "z": 10
             }
           },
           {
             "Translation": {
               "x": 0,
               "y": 0,
-              "z": 1
-            }
-          },
-          {
-            "RotateY": {
-              "radians": 0.785
+              "z": -1
             }
           }
         ]
